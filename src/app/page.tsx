@@ -5,12 +5,16 @@ const Home = () => {
   return (
     <div>
       <h1>Main Page</h1>
-      <Link href="/urlShortner">
-        URL Shortener
-      </Link>
-      <Link href="/randomNumber">
-        Random Number Generator
-      </Link>
+      <div>
+        <Link href="/urlShortner">
+          URL Shortener
+        </Link>
+      </div>
+      <div>
+        <Link href="/randomNumber">
+          Random Number Generator
+        </Link>
+      </div>
     </div>
   );
 };
