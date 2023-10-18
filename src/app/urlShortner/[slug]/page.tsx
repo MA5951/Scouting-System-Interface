@@ -1,9 +1,9 @@
 import React from 'react'
 
 type Props = {
-    params: {
-        slug: string
-    }
+  params: {
+    slug: string
+  }
 }
 
 const page = ({params}: Props) => {
@@ -11,3 +11,5 @@ const page = ({params}: Props) => {
     <div>{params.slug}</div>
   )
 }
+
+export default page
