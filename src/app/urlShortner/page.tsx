@@ -35,16 +35,18 @@ const UrlShortener = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
       <div style={{ color: 'white' }}>
-        <h1 style={{ textAlign: 'center', marginBottom: '10px', fontSize: '48px' }}>URL Shortener</h1>
+        <h1 style={{ textAlign: 'center', marginBottom: '0px', fontSize: '48px' }}>URL Shortener</h1>
         <input
           type="text"
           value={inputUrl}
+          placeholder="Target URL"
           onChange={(e) => setInputUrl(e.target.value)}
           style={{ color: 'black', marginRight: '10px', marginBottom: '10px'}}
         />
         <input 
           type="text"
           value={shortenedUrl} 
+          placeholder="Ending of URL (optional)"
           onChange={(e) => setShortenedUrl(e.target.value)}
           style={{ color: 'black', marginRight: '10px', marginBottom: '10px'}}
         />
