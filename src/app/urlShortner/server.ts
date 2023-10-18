@@ -44,8 +44,8 @@ export async function getOriginalUrl(ShortnedUrl: string) {
 
 export async function redirectToOriginalUrl(ShortnedUrl: string) {
     const dbPath = 'src/app/urlShortner/allRedirects.json';
-    const dbData = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
-    const OriginalUrl = dbData[ShortnedUrl];
+    const dbData = await JSON.parse(fs.readFileSync(dbPath, 'utf8'));
+    const OriginalUrl = await dbData[ShortnedUrl];
 
-    redirect(OriginalUrl, RedirectType.replace);
+    await redirect(OriginalUrl, RedirectType.replace);
 }
