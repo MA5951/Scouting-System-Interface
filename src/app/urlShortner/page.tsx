@@ -1,5 +1,5 @@
-// src/app/urlShortener/page.tsx
 "use client"
+
 import React, { useState } from 'react';
 import { makeShortnedUrl } from "./server";
 

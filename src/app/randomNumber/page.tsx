@@ -1,39 +1,33 @@
 "use client"
 
-// request an inpu of two numbers min and max and return a random number between them
-
 import React, { useState } from 'react';
-import {makeRandomNumber} from "@/src/app/randomNumber/server"
+import { makeRandomNumber } from "./server";
 
-const RandomNumber = () => {
-  const [min, setMin] = useState(0);
-  const [max, setMax] = useState(0);
-  const [randomNumber, setRandomNumber] = useState(0);
+const UrlShortener = () => {
+  const [MinNumber, setMinNumber] = useState('');
+  const [MaxNumber, setMaxNumber] = useState('');
 
-  const handleClick = async (minS:number, maxS:number) => {
-    const res = await makeRandomNumber(min, max)
-    setRandomNumber(res)
+  const handleClick = async (minS: number, maxS: number) => {
+    const res = await makeRandomNumber(minS, maxS)
+    console.log(res)
   }
 
   return (
     <div>
-      <h1>Random Number Generator</h1>
+      <h1>URL Shortener</h1>
       <input
         type="number"
-        value={min}
-        onChange={(e) => setMin(Number(e.target.value))}
-      />
-      <input
-        type="number"
-        value={max}
-        onChange={(e) => setMax(Number(e.target.value))}
+        value={MinNumber}
+        onChange={(e) => setMinNumber(e.target.value)}
       />
       <input 
-        type="number" 
-        value={randomNumber} 
-        onChange={(e) => setRandomNumber(Number(e.target.value))}
+        type="number"
+        value={MaxNumber} 
+        onChange={(e) => setMaxNumber(e.target.value)}
       />
-      <button onClick={()=> handleClick(min, max)}>Generate</button>
+      <button onClick={() => handleClick(Number(MinNumber), Number(MaxNumber))}>Gimmi Random</button>
     </div>
   );
 };
+
+export default UrlShortener;
