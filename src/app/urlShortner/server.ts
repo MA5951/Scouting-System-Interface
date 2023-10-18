@@ -3,6 +3,7 @@
 
 import fs from 'fs';
 import url from 'url';
+import {RedirectType, redirect} from 'next/navigation';
 
 export async function makeShortnedUrl(OriginalUrl:string, ShortnedUrl:string) {
     let newLink = "";
@@ -39,4 +40,12 @@ export async function getOriginalUrl(ShortnedUrl: string) {
   const dbPath = 'src/app/urlShortner/allRedirects.json';
   const dbData = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
   return dbData[ShortnedUrl];
+}
+
+export async function redirectToOriginalUrl(ShortnedUrl: string) {
+    const dbPath = 'src/app/urlShortner/allRedirects.json';
+    const dbData = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
+    const OriginalUrl = dbData[ShortnedUrl];
+
+    redirect(OriginalUrl, RedirectType.replace);
 }
