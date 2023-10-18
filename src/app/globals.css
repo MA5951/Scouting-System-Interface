@@ -2,28 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: rgb(49, 51, 56);
 }
 
-
+/* purple button */
+.purpleButton:hover {
+  background-color: rgb(49, 26, 54);
+  transition: background-color 0.1s ease-in-out;
+}
+.purpleButton {
+  background-color: rgb(73, 35, 118);
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  border: none ;
+  cursor: pointer;
+}
+.purpleButton:active {
+  background-color: rgb(73, 35, 118);
+  transition: background-color 0.07s ease-in-out;
+}

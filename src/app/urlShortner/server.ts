@@ -13,6 +13,8 @@ export async function makeShortnedUrl(OriginalUrl:string, ShortnedUrl:string) {
     // Check if OriginalUrl is a valid URL
     if (!url.parse(OriginalUrl).protocol || !url.parse(OriginalUrl).hostname) {
         error = "Error: Invalid Target URL";
+    } else if (/[^a-zA-Z0-9]/.test(ShortnedUrl)) {
+        error = "Error: Shortened URL contains special characters";
     } else if (ShortnedUrl == "") {
         newLink = "https://catblik.tech/urlShortner/" + Math.random().toString(36).substring(2, 7);
     } else if (dbData["https://catblik.tech/urlShortner/" + ShortnedUrl]) {

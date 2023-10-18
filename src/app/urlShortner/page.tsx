@@ -3,6 +3,8 @@
 // src/app/urlShortener/page.tsx
 import React, { useState } from 'react';
 import { makeShortnedUrl } from "./server";
+import url from 'url';
+import '@/src/app/globals.css'
 
 const UrlShortener = () => {
   const [inputUrl, setInputUrl] = useState('');
@@ -41,18 +43,21 @@ const UrlShortener = () => {
           value={inputUrl}
           placeholder="Target URL"
           onChange={(e) => setInputUrl(e.target.value)}
-          style={{ color: 'black', marginRight: '10px', marginBottom: '10px'}}
+          style={{ color: 'white', marginRight: '10px', marginBottom: '10px', backgroundColor: 'rgb(30, 31, 34)', padding: '10px', borderRadius: '5px', border: 'none'}}
         />
         <input 
           type="text"
           value={shortenedUrl} 
           placeholder="Ending of URL (optional)"
           onChange={(e) => setShortenedUrl(e.target.value)}
-          style={{ color: 'black', marginRight: '10px', marginBottom: '10px'}}
+          style={{ color: 'white', marginRight: '10px', marginBottom: '10px', backgroundColor: 'rgb(30, 31, 34)', padding: '10px', borderRadius: '5px', border: 'none'}}
         />
       </div>
-      <button style={{ backgroundColor: 'blue', color: 'white', padding: '10px', borderRadius: '5px', border: 'none', cursor: 'pointer', marginBottom: '5px' }} onClick={() => handleClick(inputUrl, shortenedUrl)}>Shorten</button>
-      {res && <p>{res}</p>}
+      <button className='purpleButton' onClick={() => handleClick(inputUrl, shortenedUrl)}>Shorten</button>
+      <div style={{display: 'flex', gap: '10px', alignItems: 'center', marginTop: '10px'}}>
+        {res && <p style={{color: 'white', backgroundColor: 'rgb(43, 45, 49)', padding: '10px', borderRadius: '5px', border: 'none', cursor: 'pointer'}}>{res}</p>}
+        {res && (url.parse(res)?.protocol || url.parse(res)?.hostname) && <button className='purpleButton' onClick={() => {navigator.clipboard.writeText(res)}}>{'📋'}</button>}
+      </div>
     </div>
   );
 }
