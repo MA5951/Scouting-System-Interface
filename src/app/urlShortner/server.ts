@@ -1,7 +1,6 @@
 // src/app/urlShortener/server.ts
 "use server"
 
-import { promises as fs } from 'fs';
 import url from 'url';
 import {RedirectType, redirect} from 'next/navigation';
 import { prisma } from '@/src/db';
@@ -13,7 +12,7 @@ export async function makeShortnedUrl(OriginalUrl:string, ShortnedUrl:string) {
     let newLink = "";
     let error = "";
 
-    
+
     // Check if OriginalUrl is a valid URL
     if (!url.parse(OriginalUrl).protocol || !url.parse(OriginalUrl).hostname) {
         error = "Error: Invalid Target URL";
@@ -47,10 +46,11 @@ export async function makeShortnedUrl(OriginalUrl:string, ShortnedUrl:string) {
     }
 }
 
-export async function getOriginalUrl(ShortnedUrl: string) {
+export async function getOriginalUrl(ShortnedUrl: string) { 
+    console.log("ShortnedUrl: ", ShortnedUrl)
     const originalUrl = await prisma.urlMap.findMany({where: {shortenedUrl: ShortnedUrl}});
 
-    return originalUrl[0].originalUrl;
+    return originalUrl.length > 0 ? originalUrl[0].originalUrl : null;
 }
 
 export async function redirectToOriginalUrl(shortenedUrl: string) {
