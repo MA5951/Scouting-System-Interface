@@ -1,7 +1,7 @@
 'use server'
 
 import React from 'react'
-import { redirectToOriginalUrl } from '../server';
+import { getOriginalUrl } from '../server';
 
 type Props = {
   params: {
@@ -13,7 +13,7 @@ const page = ({params}: Props) => {
   const shortenedUrl = `https://catblik/urlShortner/${params.slug}`
   console.log("shortenedUrl:", shortenedUrl)
 
-  console.log(redirectToOriginalUrl(shortenedUrl))
+  console.log(getOriginalUrl(shortenedUrl))
 
   return (
     <div>{params.slug}</div>
