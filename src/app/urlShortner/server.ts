@@ -37,9 +37,9 @@ export async function makeShortnedUrl(OriginalUrl:string, ShortnedUrl:string) {
     if (error == "") {
         console.log("New link: " + newLink);
 
-        prisma.urlMap.create({data: {originalUrl: OriginalUrl, shortenedUrl: newLink}});
+        const url = await prisma.urlMap.create({data: {originalUrl: OriginalUrl, shortenedUrl: newLink}});
 
-        console.log(await prisma.urlMap.findMany());
+        console.log(url);
 
         return newLink;
     } else {
