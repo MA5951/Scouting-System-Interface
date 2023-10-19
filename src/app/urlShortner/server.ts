@@ -55,12 +55,12 @@ export async function getOriginalUrl(ShortnedUrl: string) {
 }
 
 export async function redirectToOriginalUrl(ShortnedUrl: string) {
-    const originalUrl = await prisma.urlMap.findUnique({where: {shortenedUrl: ShortnedUrl, id: undefined}, select: {originalUrl: true}});
+    const originalUrl = await prisma.urlMap.findMany({where: {shortenedUrl: ShortnedUrl, id: undefined}, select: {originalUrl: true}});
 
     console.log(originalUrl);
 
     if (!originalUrl) {
         return redirect("/urlShortner/404", RedirectType.replace);
     }
-    return redirect(originalUrl.originalUrl, RedirectType.replace);
+    return redirect(originalUrl[0].originalUrl, RedirectType.replace);
 }
