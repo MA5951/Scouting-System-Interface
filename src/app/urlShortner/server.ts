@@ -60,7 +60,7 @@ export async function redirectToOriginalUrl(ShortnedUrl: string) {
     console.log(originalUrl);
 
     if (!originalUrl) {
-        return redirect("/urlShortner/404", RedirectType.replace);
+        return await redirect("/urlShortner/404", RedirectType.replace);
     }
-    return redirect(originalUrl[0].originalUrl, RedirectType.replace);
+    return await redirect(originalUrl[0].originalUrl, RedirectType.replace);
 }
