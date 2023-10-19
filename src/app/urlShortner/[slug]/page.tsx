@@ -1,4 +1,4 @@
-'use server'
+'use client'
 
 import React from 'react'
 import { getOriginalUrl } from '../server';
