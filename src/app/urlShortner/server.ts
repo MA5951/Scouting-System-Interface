@@ -8,7 +8,7 @@ import {RedirectType, redirect} from 'next/navigation';
 export async function makeShortnedUrl(OriginalUrl:string, ShortnedUrl:string) {
     let newLink = "";
     let error = "";
-    const dbPath = 'public/allRedirects.json';
+    const dbPath = 'src/app/urlShortner/allRedirects';
     const dbData = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
 
     // Check if OriginalUrl is a valid URL
@@ -37,13 +37,13 @@ export async function makeShortnedUrl(OriginalUrl:string, ShortnedUrl:string) {
 }
 
 export async function getOriginalUrl(ShortnedUrl: string) {
-  const dbPath = 'public/allRedirects.json';
+  const dbPath = 'src/app/urlShortner/allRedirects';
   const dbData = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
   return dbData[ShortnedUrl];
 }
 
 export async function redirectToOriginalUrl(ShortnedUrl: string) {
-    const dbPath = 'public/allRedirects.json';
+    const dbPath = 'src/app/urlShortner/allRedirects';
     const dbData = await JSON.parse(fs.readFileSync(dbPath, 'utf8'));
     const OriginalUrl = await dbData[ShortnedUrl];
 
