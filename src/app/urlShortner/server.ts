@@ -4,13 +4,14 @@
 import { promises as fs } from 'fs';
 import url from 'url';
 import {RedirectType, redirect} from 'next/navigation';
+import { prisma } from '@/src/db';
 
 const dbPath = process.cwd() + '/src/app/urlShortner/allRedirects.json';
 
 export async function makeShortnedUrl(OriginalUrl:string, ShortnedUrl:string) {
     let newLink = "";
     let error = "";
-    
+
     const file = await fs.readFile(dbPath, 'utf8');
     const dbData = JSON.parse(file);
 
@@ -21,17 +22,22 @@ export async function makeShortnedUrl(OriginalUrl:string, ShortnedUrl:string) {
         error = "Error: Shortened URL contains special characters";
     } else if (ShortnedUrl == "") {
         newLink = "https://catblik.tech/urlShortner/" + Math.random().toString(36).substring(2, 7);
-    } else if (dbData["https://catblik.tech/urlShortner/" + ShortnedUrl]) {
-        error = "Error: Shortened URL already exists";
     } else {
-        newLink = "https://catblik.tech/urlShortner/" + ShortnedUrl;
+        const uniqueUrl = await prisma.urlMap.findUnique({
+            where: { id: undefined, shortenedUrl: "https://catblik.tech/urlShortner/" + ShortnedUrl },
+            select: { id: true },
+        });
+        if (uniqueUrl) {
+            error = "Error: Shortened URL already exists";
+        } else {
+            newLink = "https://catblik.tech/urlShortner/" + ShortnedUrl;
+        }
     }
 
     if (error == "") {
         console.log("New link: " + newLink);
 
-        dbData[newLink] = OriginalUrl;
-        await fs.writeFile(dbPath, JSON.stringify(dbData));
+        prisma.urlMap.create({data: {originalUrl: OriginalUrl, shortenedUrl: newLink}});
 
         return newLink;
     } else {
@@ -41,17 +47,16 @@ export async function makeShortnedUrl(OriginalUrl:string, ShortnedUrl:string) {
 }
 
 export async function getOriginalUrl(ShortnedUrl: string) {
-    const file = await fs.readFile(dbPath, 'utf8');
-    const dbData = JSON.parse(file);
+    const originalUrl = await prisma.urlMap.findUnique({where: {shortenedUrl: ShortnedUrl, id: undefined}, select: {originalUrl: true}});
 
-    return dbData[ShortnedUrl];
+    return originalUrl?.originalUrl;
 }
 
 export async function redirectToOriginalUrl(ShortnedUrl: string) {
-    const file = await fs.readFile(dbPath, 'utf8');
-    const dbData = JSON.parse(file);
+    const originalUrl = await prisma.urlMap.findUnique({where: {shortenedUrl: ShortnedUrl, id: undefined}, select: {originalUrl: true}});
 
-    const OriginalUrl = await dbData[ShortnedUrl];
-
-    await redirect(OriginalUrl, RedirectType.replace);
+    if (!originalUrl) {
+        return await redirect("/urlShortner/404", RedirectType.replace);
+    }
+    return await redirect(originalUrl.originalUrl, RedirectType.replace);
 }
