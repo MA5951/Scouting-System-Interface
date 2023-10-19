@@ -13,7 +13,7 @@ const page = async ({params}: Props) => {
   const shortenedUrl = `https://catblik/urlShortner/${params.slug}`
   console.log("shortenedUrl:", shortenedUrl)
 
-  console.log(await getOriginalUrl(shortenedUrl))
+  getOriginalUrl(shortenedUrl)
 
   return (
     <div>{params.slug}</div>
