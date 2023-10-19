@@ -10,8 +10,8 @@ type Props = {
 const page = ({params}: Props) => {
   const shortenedUrl = `https://catblik/urlShortner/${params.slug}`
 
-  redirectToOriginalUrl(shortenedUrl)
-  
+  console.log(redirectToOriginalUrl(shortenedUrl))
+
   return (
     <div>{params.slug}</div>
   )
