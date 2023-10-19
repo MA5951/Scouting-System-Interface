@@ -6,31 +6,30 @@ import url from 'url';
 import {RedirectType, redirect} from 'next/navigation';
 import { prisma } from '@/src/db';
 
-const dbPath = process.cwd() + '/src/app/urlShortner/allRedirects.json';
+const dbPath = process.cwd() + '/src/app/urlShortner/allRedirects.json'; 
+const baseUrl = 'https://catblik.tech/urlShortner/';
 
 export async function makeShortnedUrl(OriginalUrl:string, ShortnedUrl:string) {
     let newLink = "";
     let error = "";
 
-    const file = await fs.readFile(dbPath, 'utf8');
-    const dbData = JSON.parse(file);
-
+    
     // Check if OriginalUrl is a valid URL
     if (!url.parse(OriginalUrl).protocol || !url.parse(OriginalUrl).hostname) {
         error = "Error: Invalid Target URL";
     } else if (/[^a-zA-Z0-9]/.test(ShortnedUrl)) {
         error = "Error: Shortened URL contains special characters";
     } else if (ShortnedUrl == "") {
-        newLink = "https://catblik.tech/urlShortner/" + Math.random().toString(36).substring(2, 7);
+        newLink = baseUrl + Math.random().toString(36).substring(2, 7);
     } else {
-        const uniqueUrl = await prisma.urlMap.findMany({where: { shortenedUrl: "https://catblik.tech/urlShortner/" + ShortnedUrl }});
+        const uniqueUrl = await prisma.urlMap.findMany({where: { shortenedUrl: baseUrl + ShortnedUrl }});
 
         console.log("uniquwUrl ", uniqueUrl);
 
         if (uniqueUrl.length > 0) {
             error = "Error: Shortened URL already exists";
         } else {
-            newLink = "https://catblik.tech/urlShortner/" + ShortnedUrl;
+            newLink = baseUrl + ShortnedUrl;
         }
     }
 
