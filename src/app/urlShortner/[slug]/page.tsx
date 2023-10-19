@@ -1,4 +1,5 @@
-'use client'
+'use server'
+
 import React from 'react'
 import { redirectToOriginalUrl } from '../server';
 
@@ -12,11 +13,7 @@ const page = ({params}: Props) => {
   const shortenedUrl = `https://catblik/urlShortner/${params.slug}`
   console.log("shortenedUrl:", shortenedUrl)
 
-  const getOriginalUrl = async () => {
-    const originalUrl: any = await redirectToOriginalUrl(shortenedUrl)
-    console.log(originalUrl?.originalUrl)
-    return originalUrl
-  }
+  console.log(redirectToOriginalUrl(shortenedUrl))
 
   return (
     <div>{params.slug}</div>
