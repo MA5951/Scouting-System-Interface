@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import { useEffect } from 'react'
 import { getOriginalUrl } from '../server';
 
 type Props = {
@@ -9,11 +9,14 @@ type Props = {
   }
 }
 
-const page = async ({params}: Props) => {
-  const shortenedUrl = `https://catblik/urlShortner/${params.slug}`
-  console.log("shortenedUrl:", shortenedUrl)
+const page = ({params}: Props) => {
 
-  getOriginalUrl(shortenedUrl)
+  useEffect(() => {
+    const shortenedUrl = `https://catblik/urlShortner/${params.slug}`
+    console.log("shortenedUrl:", shortenedUrl)
+  
+    console.log(getOriginalUrl(shortenedUrl))
+  }, [])
 
   return (
     <div>{params.slug}</div>
