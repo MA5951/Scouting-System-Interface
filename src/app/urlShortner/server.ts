@@ -1,15 +1,17 @@
 // src/app/urlShortener/server.ts
 "use server"
 
-import fs from 'fs';
+import { promises as fs } from 'fs';
 import url from 'url';
 import {RedirectType, redirect} from 'next/navigation';
+import { json } from 'stream/consumers';
 
 export async function makeShortnedUrl(OriginalUrl:string, ShortnedUrl:string) {
     let newLink = "";
     let error = "";
-    const dbPath = 'src/app/urlShortner/allRedirects';
-    const dbData = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
+    
+    const file = await fs.readFile(process.cwd() + '/allRedirects.json', 'utf8');
+    const dbData = JSON.parse(file);
 
     // Check if OriginalUrl is a valid URL
     if (!url.parse(OriginalUrl).protocol || !url.parse(OriginalUrl).hostname) {
@@ -27,7 +29,7 @@ export async function makeShortnedUrl(OriginalUrl:string, ShortnedUrl:string) {
     if (error == "") {
         console.log("New link: " + newLink);
         dbData[newLink] = OriginalUrl;
-        fs.writeFileSync(dbPath, JSON.stringify(dbData));
+        await fs.writeFile(process.cwd() + '/allRedirects.json', JSON.stringify(dbData));
 
         return newLink;
     } else {
@@ -37,14 +39,14 @@ export async function makeShortnedUrl(OriginalUrl:string, ShortnedUrl:string) {
 }
 
 export async function getOriginalUrl(ShortnedUrl: string) {
-  const dbPath = 'src/app/urlShortner/allRedirects';
-  const dbData = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
-  return dbData[ShortnedUrl];
+    const file = await fs.readFile(process.cwd() + '/allRedirects.json', 'utf8');
+    const dbData = JSON.parse(file);
+    return dbData[ShortnedUrl];
 }
 
 export async function redirectToOriginalUrl(ShortnedUrl: string) {
-    const dbPath = 'src/app/urlShortner/allRedirects';
-    const dbData = await JSON.parse(fs.readFileSync(dbPath, 'utf8'));
+    const file = await fs.readFile(process.cwd() + '/allRedirects.json', 'utf8');
+    const dbData = JSON.parse(file);
     const OriginalUrl = await dbData[ShortnedUrl];
 
     await redirect(OriginalUrl, RedirectType.replace);
