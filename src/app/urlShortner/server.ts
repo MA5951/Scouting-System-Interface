@@ -24,7 +24,9 @@ export async function makeShortnedUrl(OriginalUrl:string, ShortnedUrl:string) {
         newLink = "https://catblik.tech/urlShortner/" + Math.random().toString(36).substring(2, 7);
     } else {
         const uniqueUrl = await prisma.urlMap.findMany({where: { shortenedUrl: "https://catblik.tech/urlShortner/" + ShortnedUrl }});
-        
+
+        console.log("uniquwUrl ", uniqueUrl);
+
         if (uniqueUrl) {
             error = "Error: Shortened URL already exists";
         } else {
