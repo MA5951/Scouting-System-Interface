@@ -9,11 +9,11 @@ type Props = {
   }
 }
 
-const page = ({params}: Props) => {
+const page = async ({params}: Props) => {
   const shortenedUrl = `https://catblik/urlShortner/${params.slug}`
   console.log("shortenedUrl:", shortenedUrl)
 
-  console.log(getOriginalUrl(shortenedUrl))
+  console.log(await getOriginalUrl(shortenedUrl))
 
   return (
     <div>{params.slug}</div>
