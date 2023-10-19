@@ -55,6 +55,7 @@ export async function getOriginalUrl(ShortnedUrl: string) {
 }
 
 export async function redirectToOriginalUrl(shortenedUrl: string) {
+    console.log("shortenedUrl: ", shortenedUrl);
     const originalUrl = await prisma.urlMap.findMany({where: {shortenedUrl}});
 
     console.log(originalUrl);
