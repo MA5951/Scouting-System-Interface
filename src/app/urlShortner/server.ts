@@ -4,13 +4,14 @@
 import { promises as fs } from 'fs';
 import url from 'url';
 import {RedirectType, redirect} from 'next/navigation';
-import { json } from 'stream/consumers';
+
+const dbPath = process.cwd() + '/src/app/urlShortner/allRedirects.json';
 
 export async function makeShortnedUrl(OriginalUrl:string, ShortnedUrl:string) {
     let newLink = "";
     let error = "";
     
-    const file = await fs.readFile(process.cwd() + '/allRedirects.json', 'utf8');
+    const file = await fs.readFile(dbPath, 'utf8');
     const dbData = JSON.parse(file);
 
     // Check if OriginalUrl is a valid URL
@@ -28,8 +29,9 @@ export async function makeShortnedUrl(OriginalUrl:string, ShortnedUrl:string) {
 
     if (error == "") {
         console.log("New link: " + newLink);
+
         dbData[newLink] = OriginalUrl;
-        await fs.writeFile(process.cwd() + '/allRedirects.json', JSON.stringify(dbData));
+        await fs.writeFile(dbPath, JSON.stringify(dbData));
 
         return newLink;
     } else {
@@ -39,14 +41,16 @@ export async function makeShortnedUrl(OriginalUrl:string, ShortnedUrl:string) {
 }
 
 export async function getOriginalUrl(ShortnedUrl: string) {
-    const file = await fs.readFile(process.cwd() + '/allRedirects.json', 'utf8');
+    const file = await fs.readFile(dbPath, 'utf8');
     const dbData = JSON.parse(file);
+
     return dbData[ShortnedUrl];
 }
 
 export async function redirectToOriginalUrl(ShortnedUrl: string) {
-    const file = await fs.readFile(process.cwd() + '/allRedirects.json', 'utf8');
+    const file = await fs.readFile(dbPath, 'utf8');
     const dbData = JSON.parse(file);
+
     const OriginalUrl = await dbData[ShortnedUrl];
 
     await redirect(OriginalUrl, RedirectType.replace);
