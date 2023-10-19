@@ -11,11 +11,16 @@ type Props = {
 
 const page = ({params}: Props) => {
 
+  async function handler(shortenedUrl: string) {
+    const res = await getOriginalUrl(shortenedUrl)
+    console.log("res:", res)
+  }
+  
   useEffect(() => {
     const shortenedUrl = `https://catblik/urlShortner/${params.slug}`
     console.log("shortenedUrl:", shortenedUrl)
-  
-    console.log(getOriginalUrl(shortenedUrl))
+
+    handler(shortenedUrl)
   }, [])
 
   return (
