@@ -27,7 +27,7 @@ export async function makeShortnedUrl(OriginalUrl:string, ShortnedUrl:string) {
 
         console.log("uniquwUrl ", uniqueUrl);
 
-        if (uniqueUrl) {
+        if (uniqueUrl.length > 0) {
             error = "Error: Shortened URL already exists";
         } else {
             newLink = "https://catblik.tech/urlShortner/" + ShortnedUrl;
