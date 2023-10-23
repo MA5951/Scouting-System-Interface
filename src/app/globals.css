@@ -23,3 +23,14 @@ body {
   background-color: rgb(73, 35, 118);
   transition: background-color 0.07s ease-in-out;
 }
+
+/* text box */
+.BlackInputBox { 
+  color: 'white';
+  margin-Right: '10px';
+  margin-Bottom: '10px'; 
+  background-Color: 'rgb(30, 31, 34)';
+  padding: '10px'; 
+  border-Radius: '5px'; 
+  border: 'none'
+}

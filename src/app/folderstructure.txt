@@ -1,0 +1,13 @@
+
+└───src
+    ├───app
+    │   ├───randomNumber
+    │   │   ├───"page.tsx"
+    │   │   └───"server.ts"
+    │   └───urlShortner
+    │       ├───"page.tsx"
+    │       ├───"server.ts"
+    │       └───[slug]
+    │           └───"page.tsx"
+    └───db
+        └───"index.ts"
