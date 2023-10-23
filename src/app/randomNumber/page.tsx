@@ -24,18 +24,18 @@ const UrlShortener = () => {
             value={MinNumber}
             onChange={(e) => setMinNumber(e.target.value)}
             placeholder="Minimum Number"
-            style={{ color: 'black', marginRight: '10px', marginBottom: '10px'}}
+            style={{ color: 'white', marginRight: '10px', marginBottom: '10px', backgroundColor: 'rgb(30, 31, 34)', padding: '10px', borderRadius: '5px', border: 'none'}}
           />
           <input 
             type="number"
             value={MaxNumber} 
             onChange={(e) => setMaxNumber(e.target.value)}
             placeholder="Maximum Number"
-            style={{ color: 'black', marginRight: '10px', marginBottom: '10px'}}
+            style={{ color: 'white', marginRight: '10px', marginBottom: '10px', backgroundColor: 'rgb(30, 31, 34)', padding: '10px', borderRadius: '5px', border: 'none'}}
           />
         </div>
       </div>
-      <button style={{ backgroundColor: 'blue', color: 'white', padding: '10px', borderRadius: '5px', border: 'none', cursor: 'pointer', marginBottom: '5px' }} onClick={() => handleClick(Number(MinNumber), Number(MaxNumber))}>Gimmi Random</button>
+      <button className='purpleButton' onClick={() => handleClick(Number(MinNumber), Number(MaxNumber))}>Gimmi Random</button>
       {res && <p>{res}</p>}
     </div>
   );
