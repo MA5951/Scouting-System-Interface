@@ -4,71 +4,71 @@
 import React, { useState } from 'react';
 
 const YoutubeDownloader = () => {
-  const [url, setUrl] = useState('');
-
-  const downloadVideo = async () => {
-	try {
-	  const response = await fetch('/YoutubeDownloader/api/download', {
-		method: 'POST',
-		headers: {
-		  'Content-Type': 'application/json',
-		},
-		body: JSON.stringify({
-		  url,
-		  type: 'video',
-		}),
-	  });
-
-	  if (response.ok) {
-		const blob = await response.blob();
-		const url = window.URL.createObjectURL(blob);
-		const a = document.createElement('a');
-		a.href = url;
-		a.download = 'video.mp4';
-		document.body.appendChild(a);
-		a.click();
-		document.body.removeChild(a);
-		window.URL.revokeObjectURL(url);
-	  } else {
-		alert('Error downloading video');
+	const [url, setUrl] = useState('');
+  
+	const downloadVideo = async () => {
+	  try {
+		const response = await fetch('/YoutubeDownloader/api/download', {
+		  method: 'POST',
+		  headers: {
+			'Content-Type': 'application/json',
+		  },
+		  body: JSON.stringify({
+			url,
+			type: 'video',
+		  }),
+		});
+  
+		if (response.ok) {
+		  const blob = await response.blob();
+		  const url = window.URL.createObjectURL(blob);
+		  const a = document.createElement('a');
+		  a.href = url;
+		  a.download = 'video.mp4';
+		  document.body.appendChild(a);
+		  a.click();
+		  document.body.removeChild(a);
+		  window.URL.revokeObjectURL(url);
+		} else {
+		  alert('Error downloading video');
+		}
+	  } catch (error) {
+		console.error('Error:', error);
+		alert('An error occurred');
 	  }
-	} catch (error) {
-	  console.error('Error:', error);
-	  alert('An error occurred');
-	}
-  };
-
-  const downloadSound = async () => {
-	try {
-	  const response = await fetch('/YoutubeDownloader/api/download', {
-		method: 'POST',
-		headers: {
-		  'Content-Type': 'application/json',
-		},
-		body: JSON.stringify({
-		  url,
-		  type: 'sound',
-		}),
-	  });
-
-	  if (response.ok) {
-		const blob = await response.blob();
-		const url = window.URL.createObjectURL(blob);
-		const a = document.createElement('a');
-		a.href = url;
-		a.download = 'audio.mp3';
-		document.body.appendChild(a);
-		a.click();
-		document.body.removeChild(a);
-		window.URL.revokeObjectURL(url);
-	  } else {
-		alert('Error downloading audio');
+	};
+  
+	const downloadSound = async () => {
+	  try {
+		const response = await fetch('/YoutubeDownloader/api/download', {
+		  method: 'POST',
+		  headers: {
+			'Content-Type': 'application/json',
+		  },
+		  body: JSON.stringify({
+			url,
+			type: 'sound',
+		  }),
+		});
+  
+		if (response.ok) {
+		  const blob = await response.blob();
+		  const url = window.URL.createObjectURL(blob);
+		  const a = document.createElement('a');
+		  a.href = url;
+		  a.download = 'audio.mp3';
+		  document.body.appendChild(a);
+		  a.click();
+		  document.body.removeChild(a);
+		  window.URL.revokeObjectURL(url);
+		} else {
+		  alert('Error downloading audio');
+		}
+	  } catch (error) {
+		console.error('Error:', error);
+		alert('An error occurred');
 	  }
-	} catch (error) {
-	  console.error('Error:', error);
-	  alert('An error occurred');
-	}
-  };
+	};
 
   return (
 	<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>

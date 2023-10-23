@@ -21,7 +21,17 @@ const downloadByUrl = async (url: string, type: string, res: NextApiResponse) =>
 			throw new Error('Invalid type');
 		}
 
-		ytdl(url, { format }).pipe(res);
+		const stream = ytdl(url, { format });
+
+		if (type === 'sound') {
+			// Pipe through ffmpeg for audio
+			ffmpeg(stream)
+				.format('mp3')
+				.audioBitrate(128)
+				.pipe(res, { end: true });
+		} else {
+			stream.pipe(res);
+		}
 	} catch (error) {
 		res.status(500).json({ error: `Error downloading ${type}` });
 	}
