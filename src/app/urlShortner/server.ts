@@ -45,11 +45,11 @@ export async function makeShortnedUrl(OriginalUrl:string, ShortnedUrl:string) {
     }
 }
 
-export async function getOriginalUrl(ShortnedUrl: string) { 
-    console.log("ShortnedUrl: ", ShortnedUrl)
-    const originalUrl = await prisma.urlMap.findFirst({where: {shortenedUrl: ShortnedUrl}});
+export async function getOriginalUrl(InputedShortnedUrl: string) { 
+    console.log("ShortnedUrl: ", InputedShortnedUrl)
+    const originalUrl = await prisma.urlMap.findMany({where: {shortenedUrl: InputedShortnedUrl}});
 
     console.log(originalUrl)
 
-    return originalUrl ? originalUrl.originalUrl : null;
+    return originalUrl.length > 0 ? originalUrl[0].originalUrl : null;
 }
