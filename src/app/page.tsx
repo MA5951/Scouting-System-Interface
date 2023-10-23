@@ -15,6 +15,11 @@ const Home = () => {
           <a style={{color: 'white'}}>Random Number Generator</a>
         </Link>
       </div>
+      <div>
+        <Link href="/YoutubeDownloader">
+          <a style={{color: 'white'}}>Youtube Downloader</a>
+        </Link>
+      </div>
     </div>
   );
 };
