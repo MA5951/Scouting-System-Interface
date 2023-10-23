@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { makeRandomNumber } from "./server";
+import Link from 'next/link';
 
 const UrlShortener = () => {
   const [MinNumber, setMinNumber] = useState('');
@@ -15,7 +16,11 @@ const UrlShortener = () => {
   }
 
   return (
+    
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+    <Link href="/">
+      <a style={{ position: 'absolute', top: '10px', left: '10px' }}>Home</a>
+      </Link>
       <div style={{ color: 'white', textAlign: 'center' }}>
         <h1 style={{ textAlign: 'center', marginBottom: '0px', fontSize: '48px' }}>Random Number Generator</h1>
         <div style={{ textAlign: 'center' }}>
