@@ -47,14 +47,14 @@ const UrlShortener = () => {
           value={inputUrl}
           placeholder="Target URL"
           onChange={(e) => setInputUrl(e.target.value)}
-          className='BlackInputBox'
+          style={{color: 'white', marginRight: '10px', marginBottom: '10px', backgroundColor: 'rgb(30, 31, 34)', padding: '10px', borderRadius: '5px', border: 'none'}}
         />
         <input 
           type="text"
           value={shortenedUrl} 
           placeholder="Ending of URL (optional)"
           onChange={(e) => setShortenedUrl(e.target.value)}
-          className='BlackInputBox'
+          style={{color: 'white', marginRight: '10px', marginBottom: '10px', backgroundColor: 'rgb(30, 31, 34)', padding: '10px', borderRadius: '5px', border: 'none'}}
         />
       </div>
       <button className='purpleButton' onClick={() => handleClick(inputUrl, shortenedUrl)}>Shorten</button>

@@ -29,14 +29,14 @@ const UrlShortener = () => {
             value={MinNumber}
             onChange={(e) => setMinNumber(e.target.value)}
             placeholder="Minimum Number"
-            className='BlackInputBox'
+            style={{color: 'white', marginRight: '10px', marginBottom: '10px', backgroundColor: 'rgb(30, 31, 34)', padding: '10px', borderRadius: '5px', border: 'none'}}
           />
           <input 
             type="number"
             value={MaxNumber} 
             onChange={(e) => setMaxNumber(e.target.value)}
             placeholder="Maximum Number"
-            className='BlackInputBox'
+            style={{color: 'white', marginRight: '10px', marginBottom: '10px', backgroundColor: 'rgb(30, 31, 34)', padding: '10px', borderRadius: '5px', border: 'none'}}
           />
         </div>
       </div>

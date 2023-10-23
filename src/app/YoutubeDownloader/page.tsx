@@ -68,8 +68,7 @@ const YoutubeDownloader = () => {
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           placeholder="Enter YouTube URL"
-          className="BlackInputBox"
-          style={{ margin: '10px' }}
+          style={{color: 'white', marginRight: '10px', marginBottom: '10px', backgroundColor: 'rgb(30, 31, 34)', padding: '10px', borderRadius: '5px', border: 'none'}}
         />
         <button className="purpleButton" onClick={downloadVideo} style={{ marginRight: '10px' }}>
           Download Video

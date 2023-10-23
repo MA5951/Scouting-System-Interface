@@ -24,7 +24,7 @@ const page = ({params}: Props) => {
       router.replace('https://catblik.tech/youtubeShorts' + params.slug.split("shorts/")[1]);
     } else {
       router.replace('https://catblik.tech');
-    }
+    } 
 }
 
 export default page
