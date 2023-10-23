@@ -6,7 +6,7 @@ const YoutubeDownloader = () => {
   const [url, setUrl] = useState('');
 
   const downloadVideo = async () => {
-    const response = await fetch('/api/download', {
+    const response = await fetch('YoutubeDownloader/api/download', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ const YoutubeDownloader = () => {
   };
 
   const downloadSound = async () => {
-    const response = await fetch('/api/download', {
+    const response = await fetch('YoutubeDownloader/api/download', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
