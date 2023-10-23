@@ -59,26 +59,26 @@ const YoutubeDownloader = () => {
     }
   };
 
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-      <div style={{ color: 'white', textAlign: 'center' }}>
-        <h1 style={{ textAlign: 'center', marginBottom: '0px', fontSize: '48px' }}>YouTube Downloader</h1>
-        <input
-          type="text"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-          placeholder="Enter YouTube URL"
-          style={{color: 'white', marginRight: '10px', marginBottom: '10px', backgroundColor: 'rgb(30, 31, 34)', padding: '10px', borderRadius: '5px', border: 'none'}}
-        />
-        <button className="purpleButton" onClick={downloadVideo} style={{ marginRight: '10px' }}>
-          Download Video
-        </button>
-        <button className="purpleButton" onClick={downloadSound}>
-          Download MP3
-        </button>
-      </div>
-    </div>
-  );
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+            <div style={{ color: 'white', textAlign: 'center' }}>
+                <h1 style={{ textAlign: 'center', marginBottom: '0px', fontSize: '48px' }}>YouTube Downloader</h1>
+                <input
+                type="text"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                placeholder="Enter YouTube URL"
+                style={{color: 'white', marginRight: '10px', marginBottom: '10px', backgroundColor: 'rgb(30, 31, 34)', padding: '10px', borderRadius: '5px', border: 'none'}}
+                />
+                <button className="purpleButton" onClick={downloadVideo} style={{ marginRight: '10px' }}>
+                Download Video
+                </button>
+                <button className="purpleButton" onClick={downloadSound}>
+                Download MP3
+                </button>
+            </div>
+        </div>
+    );
 };
 
 export default YoutubeDownloader;
