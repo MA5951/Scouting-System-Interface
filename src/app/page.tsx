@@ -7,12 +7,12 @@ const Home = () => {
       <h1>Main Page</h1>
       <div>
         <Link href="/urlShortner">
-          URL Shortener
+          <a style={{color: 'white'}}>URL Shortener</a>
         </Link>
       </div>
       <div>
         <Link href="/randomNumber">
-          Random Number Generator
+          <a style={{color: 'white'}}>Random Number Generator</a>
         </Link>
       </div>
     </div>
