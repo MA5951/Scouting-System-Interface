@@ -12,7 +12,7 @@ type Props = {
 
 const page = ({params}: Props) => {
 
-  const baseUrl = 'https://catblik/urlShortner/';
+  const baseUrl = 'https://catblik.tech/urlShortner/';
   const router = useRouter();
 
   async function handler(shortenedUrl: string) {
