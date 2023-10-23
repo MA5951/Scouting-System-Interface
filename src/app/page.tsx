@@ -4,7 +4,7 @@ import Link from 'next/link';
 const Home = () => {
   return (
     <div>
-      <h1>Main Page</h1>
+      <h1 style={{color: 'white'}}>Main Page</h1>
       <div>
         <Link href="/urlShortner">
           <a style={{color: 'white'}}>URL Shortener</a>
