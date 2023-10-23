@@ -1,3 +1,5 @@
+"use server"
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import ytdl from 'ytdl-core';
 import ffmpeg from 'fluent-ffmpeg';
