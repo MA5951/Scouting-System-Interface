@@ -7,17 +7,17 @@ const Home = () => {
       <h1 style={{color: 'white'}}>Main Page</h1>
       <div>
         <Link href="/urlShortner">
-          <a style={{color: 'white'}}>URL Shortener</a>
+          <h1 style={{color: 'white'}}>URL Shortener</h1>
         </Link>
       </div>
       <div>
         <Link href="/randomNumber">
-          <a style={{color: 'white'}}>Random Number Generator</a>
+          <h1 style={{color: 'white'}}>Random Number Generator</h1>
         </Link>
       </div>
       <div>
         <Link href="/YoutubeDownloader">
-          <a style={{color: 'white'}}>Youtube Downloader</a>
+          <h1 style={{color: 'white'}}>Youtube Downloader</h1>
         </Link>
       </div>
     </div>

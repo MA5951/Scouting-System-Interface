@@ -34,7 +34,9 @@ const page = ({params}: Props) => {
   }, [])
 
   return (
-    <div>{params.slug}</div>
+    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+      <h1 style={{color: 'white', fontWeight: 'bold', fontSize: '2rem'}}>redirecting</h1>
+    </div>
   )
 }
 
