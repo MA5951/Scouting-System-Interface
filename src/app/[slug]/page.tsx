@@ -19,7 +19,7 @@ const page = ({params}: Props) => {
     const YoutubeBaseUrl = 'https://catblik.tech/';
 
     if (params.slug){
-      router.replace(params.slug.includes("watch?v=") ? `${YoutubeBaseUrl}${params.slug.split("watch?v=")[1]}` : 'https://catblik.tech/youtubeDownloader');
+      router.replace(params.slug.includes("watch?v=") ? `${YoutubeBaseUrl}${params.slug.split("watch?v=")[1]}` : 'https://catblik.tech/YoutubeDownloader');
     } else if (params.slug.includes("shorts/")) {
       router.replace('https://catblik.tech/youtubeShorts' + params.slug.split("shorts/")[1]);
     } else {
