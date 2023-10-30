@@ -16,7 +16,7 @@ const page = ({params}: Props) => {
     //The long integer is the video id.
 
     const router = useRouter();
-    const YoutubeBaseUrl = 'https://catblik.tech/youtube/';
+    const YoutubeBaseUrl = 'https://catblik.tech/';
 
     if (params.slug){
       router.replace(params.slug.includes("watch?v=") ? `${YoutubeBaseUrl}${params.slug.split("watch?v=")[1]}` : 'https://catblik.tech');
