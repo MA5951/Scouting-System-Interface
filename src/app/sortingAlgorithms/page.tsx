@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { getSortingArray, setArray, randomizeArray, runSortingAlgorithm } from './server';
+import { getSortingArray, setArray, randomizeArray, runSortingAlgorithm, getColorArray } from './server';
 
 const SortingAlgorithms = () => {
     const [array, setArrayState] = useState<number[]>([]);
@@ -34,6 +34,16 @@ const SortingAlgorithms = () => {
         await runSortingAlgorithm(number);
         fetchData();
     };
+
+    // get the color array
+    const getColor = async () => {
+        return getColorArray();
+    };
+
+    const colorOfIndex = async (index: number) => {
+        const colorArray = await getColor();
+        return colorArray[index][1];
+    }
 
     // get the sorting algorithm enum
     enum SortingAlgorithm {
@@ -69,7 +79,8 @@ const SortingAlgorithms = () => {
                         className='array-bar'
                         key={index}
                         style={{
-                            backgroundColor: '#ffffff',
+                            // backgroundColor: colorOfIndex(index),
+                            backgroundColor: "ffffff",
                             height: `${value * 2}px`,
                             width: `${(screenWidth - 5 * array.length) / array.length}px`,
                     }}></div>
