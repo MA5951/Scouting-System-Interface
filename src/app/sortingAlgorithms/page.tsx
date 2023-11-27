@@ -9,8 +9,7 @@ const SortingAlgorithms = () => {
     const [array, setArrayState] = useState<number[]>([]);
 
     // get the screen width
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
+    const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 0;
 
     useEffect(() => {
         // Fetch the initial array when the component mounts
