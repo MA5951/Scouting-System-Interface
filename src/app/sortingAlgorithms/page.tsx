@@ -51,13 +51,13 @@ const SortingAlgorithms = () => {
             <div style={{ color: 'white', textAlign: 'center' }}>
                 <h1 style={{ textAlign: 'center', marginBottom: '0px', fontSize: '48px' }}>Sorting Algorithm Visualization</h1>
                 <div style={{ textAlign: 'center' }}>
-                    <button className='purpleButton' onClick={() => generateRandomArray()}>Generate Random Array</button>
-                    <button className='purpleButton' onClick={() => performSort(SortingAlgorithm.BubbleSort)}>Bubble Sort</button>
-                    <button className='purpleButton' onClick={() => performSort(SortingAlgorithm.SelectionSort)}>Selection Sort</button>
-                    <button className='purpleButton' onClick={() => performSort(SortingAlgorithm.QuickSort)}>Quick Sort</button>
-                    <button className='purpleButton' onClick={() => performSort(SortingAlgorithm.MergeSort)}>Merge Sort</button>
-                    <button className='purpleButton' onClick={() => performSort(SortingAlgorithm.HeapSort)}>Heap Sort</button>
-                    <button className='purpleButton' onClick={() => performSort(SortingAlgorithm.BogoSort)}>Bogo Sort</button>
+                    <button className='purpleButton' style={{ marginRight: '10px' }} onClick={() => generateRandomArray()}>Generate Random Array</button>
+                    <button className='purpleButton' style={{ marginRight: '10px' }} onClick={() => performSort(SortingAlgorithm.BubbleSort)}>Bubble Sort</button>
+                    <button className='purpleButton' style={{ marginRight: '10px' }} onClick={() => performSort(SortingAlgorithm.SelectionSort)}>Selection Sort</button>
+                    <button className='purpleButton' style={{ marginRight: '10px' }} onClick={() => performSort(SortingAlgorithm.QuickSort)}>Quick Sort</button>
+                    <button className='purpleButton' style={{ marginRight: '10px' }} onClick={() => performSort(SortingAlgorithm.MergeSort)}>Merge Sort</button>
+                    <button className='purpleButton' style={{ marginRight: '10px' }} onClick={() => performSort(SortingAlgorithm.HeapSort)}>Heap Sort</button>
+                    <button className='purpleButton' style={{ marginRight: '10px' }} onClick={() => performSort(SortingAlgorithm.BogoSort)}>Bogo Sort</button>
                 </div>
             </div>
             <div style={{ marginTop: '20px', display: 'flex', gap: '5px' }}>
