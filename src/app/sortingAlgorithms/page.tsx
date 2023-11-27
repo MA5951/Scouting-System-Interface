@@ -8,6 +8,9 @@ import { getSortingArray, setArray, randomizeArray, runSortingAlgorithm } from '
 const SortingAlgorithms = () => {
     const [array, setArrayState] = useState<number[]>([]);
 
+    // get the screen width and height
+    const [width, setWidth] = useState<number>(0);
+
     useEffect(() => {
         // Fetch the initial array when the component mounts
         fetchData();
@@ -71,6 +74,7 @@ const SortingAlgorithms = () => {
                             height: `${value}px`,
                             width: `${1000 / array.length}px`,
                         }}></div>
+                        // TODO: make the width dynamic based on the screen width
                 ))}
             </div>
         </div>
