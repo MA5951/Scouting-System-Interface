@@ -8,8 +8,8 @@ import { getSortingArray, setArray, randomizeArray, runSortingAlgorithm } from '
 const SortingAlgorithms = () => {
     const [array, setArrayState] = useState<number[]>([]);
 
-    // get the screen width and height
-    const [width, setWidth] = useState<number>(0);
+    // get the screen width
+    const screenWidth = window.innerWidth;
 
     useEffect(() => {
         // Fetch the initial array when the component mounts
@@ -25,8 +25,8 @@ const SortingAlgorithms = () => {
         return getSortingArray();
     };
 
-    const generateRandomArray = async () => {
-        await randomizeArray();
+    const generateRandomArray = async (arrayLength: number) => {
+        await randomizeArray(arrayLength);
         fetchData();
     };
 
@@ -54,7 +54,7 @@ const SortingAlgorithms = () => {
             <div style={{ color: 'white', textAlign: 'center' }}>
                 <h1 style={{ textAlign: 'center', marginBottom: '0px', fontSize: '48px' }}>Sorting Algorithm Visualization</h1>
                 <div style={{ textAlign: 'center' }}>
-                    <button className='purpleButton' style={{ marginRight: '10px' }} onClick={() => generateRandomArray()}>Generate Random Array</button>
+                    <button className='purpleButton' style={{ marginRight: '10px' }} onClick={() => generateRandomArray(100)}>Generate Random Array</button>
                     <button className='purpleButton' style={{ marginRight: '10px' }} onClick={() => performSort(SortingAlgorithm.BubbleSort)}>Bubble Sort</button>
                     <button className='purpleButton' style={{ marginRight: '10px' }} onClick={() => performSort(SortingAlgorithm.SelectionSort)}>Selection Sort</button>
                     <button className='purpleButton' style={{ marginRight: '10px' }} onClick={() => performSort(SortingAlgorithm.QuickSort)}>Quick Sort</button>
@@ -72,9 +72,8 @@ const SortingAlgorithms = () => {
                         style={{
                             backgroundColor: 'white',
                             height: `${value}px`,
-                            width: `${1000 / array.length}px`,
+                            width: `${(screenWidth - 5 * array.length) / array.length}px`,
                         }}></div>
-                        // TODO: make the width dynamic based on the screen width
                 ))}
             </div>
         </div>

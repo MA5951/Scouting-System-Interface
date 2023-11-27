@@ -2,6 +2,7 @@
 // src/app/sortingAlgorithms/algorithms.ts
 // global array to sort
 let array: number[] = [];
+let arrayLength: number = 100;
 
 // delay function
 async function delay(ms: number) {
@@ -26,10 +27,10 @@ export async function swap(i: number, j: number) {
 }
 
 // randomize the array
-export async function randomizeArray() {
+export async function randomizeArray(arrayLength: number) {
     array.length = 0;
-    for (let i = 0; i < 100; i++) {
-        array.push(Math.floor(Math.random() * 100));
+    for (let i = 0; i < arrayLength; i++) {
+        array.push(Math.floor(Math.random() * arrayLength));
     }
 }
 
