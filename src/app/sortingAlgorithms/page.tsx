@@ -10,6 +10,7 @@ const SortingAlgorithms = () => {
 
     // get the screen width
     const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
 
     useEffect(() => {
         // Fetch the initial array when the component mounts
@@ -64,16 +65,15 @@ const SortingAlgorithms = () => {
                 </div>
             </div>
             <div style={{ marginTop: '20px', display: 'flex', gap: '5px' }}>
-                {/* Display the array using vertical bars in different lengths */}
                 {array.map((value, index) => (
                     <div
                         className='array-bar'
                         key={index}
                         style={{
-                            backgroundColor: 'white',
-                            height: `${value}px`,
+                            backgroundColor: '#ffffff',
+                            height: `${value * 2}px`,
                             width: `${(screenWidth - 5 * array.length) / array.length}px`,
-                        }}></div>
+                    }}></div>
                 ))}
             </div>
         </div>
