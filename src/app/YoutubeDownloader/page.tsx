@@ -1,6 +1,7 @@
 // src/app/YoutubeDownloader/page.tsx
 "use client"
 
+import Link from 'next/link';
 import React, { useState } from 'react';
 
 const YoutubeDownloader = () => {
@@ -72,6 +73,9 @@ const YoutubeDownloader = () => {
 
   return (
 	<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+	<Link legacyBehavior href="/">
+      <a style={{color: 'white', position: 'absolute', top: '10px', left: '10px'}}>Home</a>
+      </Link>   
 	  <div style={{ color: 'white', textAlign: 'center' }}>
 		<h1 style={{ textAlign: 'center', marginBottom: '0px', fontSize: '48px' }}>YouTube Downloader</h1>
 		<input

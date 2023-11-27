@@ -18,9 +18,9 @@ const UrlShortener = () => {
   return (
     
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-    <Link href="/">
+    <Link legacyBehavior href="/">
       <a style={{color: 'white', position: 'absolute', top: '10px', left: '10px'}}>Home</a>
-      </Link>
+      </Link> 
       <div style={{ color: 'white', textAlign: 'center' }}>
         <h1 style={{ textAlign: 'center', marginBottom: '0px', fontSize: '48px' }}>Random Number Generator</h1>
         <div style={{ textAlign: 'center' }}>

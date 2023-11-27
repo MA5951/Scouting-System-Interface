@@ -37,9 +37,9 @@ const UrlShortener = () => {
 	
 	return (
 		<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-		<Link href="/">
-			<h1 style={{color: 'white', position: 'absolute', top: '10px', left: '10px'}}>Home</h1>
-			</Link>
+		<Link legacyBehavior href="/">
+			<a style={{color: 'white', position: 'absolute', top: '10px', left: '10px'}}>Home</a>
+			</Link> 
 			<div style={{ color: 'white' }}>
 				<h1 style={{ textAlign: 'center', marginBottom: '0px', fontSize: '48px' }}>URL Shortener</h1>
 				<input

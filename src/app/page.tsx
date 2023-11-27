@@ -20,6 +20,11 @@ const Home = () => {
           <h1 style={{color: 'white'}}>Youtube Downloader</h1>
         </Link>
       </div>
+      <div>
+        <Link href="/sortingAlgorithms">
+          <h1 style={{color: 'white'}}>Sorting Algorithms</h1>
+        </Link>
+      </div>
     </div>
   );
 };
