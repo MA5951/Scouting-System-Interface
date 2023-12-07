@@ -37,9 +37,20 @@ const UrlShortener = () => {
 	
 	return (
 		<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-		<Link legacyBehavior href="/">
-			<a style={{color: 'white', position: 'absolute', top: '10px', left: '10px'}}>Home</a>
-			</Link> 
+            <div className="buttonContainer" style={{ backgroundColor: "rgb(30, 31, 34)", padding: '10px', width: '100%', position: 'fixed', top: '0', left: '0'}}>
+                <Link legacyBehavior href="/">
+                    <button className='purpleButton' style={{ marginRight: '10px'}}>Home Page</button>
+                </Link>
+                <Link legacyBehavior href="/randomNumber">
+                    <button className='purpleButton' style={{ marginRight: '10px' }}>Random Number Generator</button>
+                </Link>
+                <Link legacyBehavior href="/YoutubeDownloader">
+                    <button className='purpleButton' style={{ marginRight: '10px' }}>Youtube Downloader</button>
+                </Link>
+                <Link legacyBehavior href="/sortingAlgorithms">
+                    <button className='purpleButton' style={{ marginRight: '10px' }}>Sorting Algorithms</button>
+                </Link>
+            </div>
 			<div style={{ color: 'white' }}>
 				<h1 style={{ textAlign: 'center', marginBottom: '0px', fontSize: '48px' }}>URL Shortener</h1>
 				<input
