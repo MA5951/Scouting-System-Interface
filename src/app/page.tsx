@@ -1,32 +1,27 @@
-// pages/index.tsx
 import Link from 'next/link';
 
-const Home = () => {
+const HomePage = () => {
   return (
-    <div>
-      <h1 style={{color: 'white'}}>Main Page</h1>
-      <div>
-        <Link href="/urlShortner">
-          <h1 style={{color: 'white'}}>URL Shortener</h1>
-        </Link>
-      </div>
-      <div>
-        <Link href="/randomNumber">
-          <h1 style={{color: 'white'}}>Random Number Generator</h1>
-        </Link>
-      </div>
-      <div>
-        <Link href="/YoutubeDownloader">
-          <h1 style={{color: 'white'}}>Youtube Downloader</h1>
-        </Link>
-      </div>
-      <div>
-        <Link href="/sortingAlgorithms">
-          <h1 style={{color: 'white'}}>Sorting Algorithms</h1>
-        </Link>
+    <div className="container" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+      <div className="content">
+        <h1 className="heading" style={{ color: "white", textAlign: "center"}}>Main Page</h1>
+        <div className="buttonContainer">
+          <Link legacyBehavior href="/urlShortner">
+            <a className="purpleButton" style={{ marginRight: "10px", textDecoration: "none" }}>URL Shortener</a>
+          </Link>
+          <Link legacyBehavior href="/randomNumber">
+            <a className="purpleButton" style={{ marginRight: "10px", textDecoration: "none" }}>Random Number Generator</a>
+          </Link>
+          <Link legacyBehavior href="/YoutubeDownloader">
+            <a className="purpleButton" style={{ marginRight: "10px", textDecoration: "none" }}>Youtube Downloader</a>
+          </Link>
+          <Link legacyBehavior href="/sortingAlgorithms">
+            <a className="purpleButton" style={{ marginRight: "10px", textDecoration: "none" }}>Sorting Algorithms</a>
+          </Link>
+        </div>
       </div>
     </div>
   );
 };
 
-export default Home;
+export default HomePage;
