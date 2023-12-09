@@ -22,21 +22,21 @@ export const Navbar = (props: Props) => {
 
     return (
         <nav className="buttonContainer" style={{ backgroundColor: "rgb(30, 31, 34)", padding: '10px', width: '100%', position: 'fixed', top: '0', left: '0'}}>
-            <button className={getButtonClassName(Page.Home)} style={{ marginRight: '10px' }}>
-                <Link href={'/'}>Home Page</Link>
-            </button>
-            <button className={getButtonClassName(Page.UrlShortener)} style={{ marginRight: '10px' }}>
-                <Link href={'/urlShortner'}>URL Shortener</Link>
-            </button>
-            <button className={getButtonClassName(Page.RandomNumber)} style={{ marginRight: '10px' }}>
-                <Link href={'/randomNumber'}>Random Number Generator</Link>
-            </button>
-            <button className={getButtonClassName(Page.YoutubeDownloader)} style={{ marginRight: '10px' }}>
-                <Link href={'/YoutubeDownloader'}>Youtube Downloader</Link>
-            </button>
-            <button className={getButtonClassName(Page.SortingAlgorithms)} style={{ marginRight: '10px' }}>
-                <Link href={'/sortingAlgorithms'}>Sorting Algorithms</Link>
-            </button>
+            <Link className={getButtonClassName(Page.Home)} 
+                href={'/'} style={{ marginRight: '10px' }}>Home Page
+            </Link>
+            <Link className={getButtonClassName(Page.UrlShortener)} 
+                href={'/urlShortner'} style={{ marginRight: '10px' }}>URL Shortener
+            </Link>
+            <Link className={getButtonClassName(Page.RandomNumber)} 
+                href={'/randomNumber'} style={{ marginRight: '10px' }}>Random Number Generator
+            </Link>
+            <Link className={getButtonClassName(Page.YoutubeDownloader)}
+                href={'/YoutubeDownloader'} style={{ marginRight: '10px' }}>Youtube Downloader
+            </Link>
+            <Link className={getButtonClassName(Page.SortingAlgorithms)}
+                href={'/sortingAlgorithms'} style={{ marginRight: '10px' }}>Sorting Algorithms
+            </Link>
         </nav>
     )
 }
