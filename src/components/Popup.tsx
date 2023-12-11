@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { on } from 'events';
 
 enum PopupPage {
   Home = 'home',
@@ -49,7 +48,7 @@ const Popup = ({ isOpen, onClose }: Props) => {
               </motion.div>
             </button>
             {currentPopupPage === PopupPage.Home && (
-              <Image src="https://github.com/AsafMeizner/multi-app-website-new/blob/master/public/galgol.JPG?raw=true" alt="galgol" width={500} height={500} />
+              <Image src="https://catblik.tech/galgol.jpg" alt="galgol" width={500} height={500} />
             )}
           </div>
         </motion.div>
