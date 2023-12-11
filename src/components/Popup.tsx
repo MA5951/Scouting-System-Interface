@@ -13,31 +13,32 @@ type Props = {
   onClose: () => void;
 };
 
-const Popup = ({ isOpen, onClose }: Props) => {
+const Popup = ({ isOpen: stateToSet, onClose }: Props) => {
   const [currentPopupPage, setCurrentPopupPage] = useState<PopupPage>(PopupPage.Home);
 
   const navigateToPopupPage = (page: PopupPage) => {
     setCurrentPopupPage(page);
   };
 
-  const popupOpacity = isOpen ? 1 : 0;
-  let setState = false;
-  if (isOpen) {setState = true};
+  const popupOpacity = stateToSet ? 1 : 0;
+  let isOpen = false;
+  if (stateToSet) {isOpen = true};
 
   return (
     <>
-      {setState && (
+      {isOpen && (
         <motion.div
           className="popup-overlay" // Add your styling here
-          initial={{ opacity: popupOpacity }}
+          initial={{ opacity: 0 }}
           animate={{ opacity: popupOpacity }}
           layout
           transition={{ duration: 2, type: 'tween' }}
-          onAnimationEnd={() => {setState = isOpen}}
+          onAnimationEnd={() => {isOpen = stateToSet}}
         >
           <div className="popup-content" style={{ position: 'relative' }}>
             <button
-              onClick={onClose}
+              // onClick={onClose}
+              onClick={() => stateToSet=false}
               aria-label="Close popup"
               style={{ position: 'absolute', top: 0, left: 0, marginTop: '15px', marginLeft: '15px'}}
             >
