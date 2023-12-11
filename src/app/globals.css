@@ -14,6 +14,14 @@ body {
   border-radius: 15px;
 }
 
+/* gray container */
+.purpleContainer {
+  width: 50px;
+  height: 50px;
+  background-Color: 'rgb(30, 31, 34)';
+  border-radius: 15px;
+}
+
 /* rounded image */
 .roundedImage {
   border-radius: 2%;
