@@ -7,6 +7,7 @@ const Galgol = ({stateToSet, handleClose} : {stateToSet: boolean, handleClose:()
 
     let popupOpacity;
     let isOpen: boolean = false;
+    let isComplete: boolean = false;
 
     if (stateToSet) {
         popupOpacity = 1;
@@ -17,8 +18,8 @@ const Galgol = ({stateToSet, handleClose} : {stateToSet: boolean, handleClose:()
 
     return (
         <>
-        {isOpen && (
-            <AnimatePresence>
+        <AnimatePresence>
+            {isOpen && (
                 <motion.div
                     className="popup-overlay" // Add your styling here
                     initial={{ opacity: 0 }}
@@ -65,8 +66,8 @@ const Galgol = ({stateToSet, handleClose} : {stateToSet: boolean, handleClose:()
                     />
                 </div>
                 </motion.div>
-            </AnimatePresence>
-        )}
+            )}
+        </AnimatePresence>
         </>
     );
 };
