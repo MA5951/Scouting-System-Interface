@@ -49,7 +49,7 @@ const Popup = ({ isOpen, onClose }: Props) => {
               </motion.div>
             </button>
             {currentPopupPage === PopupPage.Home && (
-              <Image src="/../galgol.jpg" alt="galgol" width={500} height={500} />
+              <Image src="https://github.com/AsafMeizner/multi-app-website-new/blob/master/public/galgol.JPG?raw=true" alt="galgol" width={500} height={500} />
             )}
           </div>
         </motion.div>
