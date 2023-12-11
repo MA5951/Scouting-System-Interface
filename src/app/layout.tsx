@@ -5,8 +5,6 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '../components/Navbar';
 import Popup from '../components/Popup';
-import openGalgolPopup from '../components/galgol';
-import GalgolPopup from '../components/galgol';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -33,10 +31,6 @@ export default function RootLayout({
           Open Popup
         </button>
         <Popup isOpen={isPopupOpen} onClose={closePopup} />
-        {/* <button className='purpleButton' onClick={openGalgolPopup} style={{ marginTop: '50px' }}>
-          Open Popup
-        </button>
-        <GalgolPopup /> */}
         {children}
       </body>
     </html>

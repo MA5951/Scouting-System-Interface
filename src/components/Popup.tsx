@@ -21,20 +21,26 @@ const Popup = ({ isOpen, onClose }: Props) => {
   };
 
   const popupOpacity = isOpen ? 1 : 0;
+  let setState = false;
+  if (isOpen) {setState = true};
 
   return (
     <>
-      {isOpen && (
+      {setState && (
         <motion.div
           className="popup-overlay" // Add your styling here
           initial={{ opacity: popupOpacity }}
           animate={{ opacity: popupOpacity }}
           layout
-          transition={{ duration: 0.5, type: 'tween' }}
-          
+          transition={{ duration: 2, type: 'tween' }}
+          onAnimationEnd={() => {setState = isOpen}}
         >
-          <div className="popup-content"> {/* Add your styling here */}
-            <button onClick={onClose} aria-label="Close popup">
+          <div className="popup-content" style={{ position: 'relative' }}>
+            <button
+              onClick={onClose}
+              aria-label="Close popup"
+              style={{ position: 'absolute', top: 0, left: 0, marginTop: '15px', marginLeft: '15px'}}
+            >
               <motion.div
                 className="purpleContainer"
                 whileHover={{ scale: 1.2, rotate: 90 }}
@@ -43,12 +49,28 @@ const Popup = ({ isOpen, onClose }: Props) => {
                   rotate: -90,
                   borderRadius: '100%',
                 }}
-              >
-                <h1>✖️</h1>
+              > 
+                <h1
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: '100%',
+                    width: '100%',
+                  }}
+                >
+                  ✖️
+                </h1>
               </motion.div>
             </button>
             {currentPopupPage === PopupPage.Home && (
-              <Image src="https://raw.githubusercontent.com/AsafMeizner/multi-app-website-new/master/public/galgol.JPG" alt="galgol" width={500} height={500} />
+              <Image
+                style={{ borderRadius: '10px' }}
+                src="https://raw.githubusercontent.com/AsafMeizner/multi-app-website-new/master/public/galgol.JPG"
+                alt="galgol"
+                width={800}
+                height={800}
+              />
             )}
           </div>
         </motion.div>
