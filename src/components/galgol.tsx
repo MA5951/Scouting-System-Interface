@@ -25,7 +25,7 @@ const Galgol = ({stateToSet, handleClose} : {stateToSet: boolean, handleClose:()
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     layout
-                    transition={{ duration: 2, type: 'tween' }}
+                    transition={{ duration: 0.7, type: 'tween' }}
                     exit={{ opacity: 0 }}
                     onAnimationComplete={() => {isOpen = false}}
                 >
