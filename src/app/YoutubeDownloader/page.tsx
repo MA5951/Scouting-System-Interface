@@ -8,45 +8,45 @@ import { toast } from 'react-toastify';
 const YoutubeDownloader = () => {
   const [url, setUrl] = useState('');
 
-  const downloadVideo = async () => {
-    try {
-      const response = await fetch('/YoutubeDownloader/api/download', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          url,
-          type: 'video',
-        }),
-      });
-
-      handleDownloadResponse(response, 'video');
-    } catch (error) {
-      console.error('Error:', error);
-      toast.error('An error occurred', { theme: 'colored' });
-    }
-  };
-
-  const downloadSound = async () => {
-    try {
-      const response = await fetch('/YoutubeDownloader/api/download', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          url,
-          type: 'sound',
-        }),
-      });
-
-      handleDownloadResponse(response, 'audio');
-    } catch (error) {
-      console.error('Error:', error);
-      toast.error('An error occurred', { theme: 'colored' });
-    }
-  };
+	const downloadVideo = async () => {
+		try {
+		const response = await fetch('/api/download', {  // Replace with your actual endpoint
+			method: 'POST',
+			headers: {
+			'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+			url,
+			type: 'video',
+			}),
+		});
+	
+		handleDownloadResponse(response, 'video');
+		} catch (error) {
+		console.error('Error:', error);
+		toast.error('An error occurred', { theme: 'colored' });
+		}
+	};
+	
+	const downloadSound = async () => {
+		try {
+		const response = await fetch('/api/download', {  // Replace with your actual endpoint
+			method: 'POST',
+			headers: {
+			'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+			url,
+			type: 'sound',
+			}),
+		});
+	
+		handleDownloadResponse(response, 'audio');
+		} catch (error) {
+		console.error('Error:', error);
+		toast.error('An error occurred', { theme: 'colored' });
+		}
+	};
 
   const handleDownloadResponse = async (response: Response, fileType: string) => {
     if (response.ok) {
