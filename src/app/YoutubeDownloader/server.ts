@@ -1,6 +1,3 @@
-// src/pages/api/download.ts
-// This is a Server Component file
-
 "use server"
 
 import { NextApiRequest, NextApiResponse } from 'next';

@@ -9,7 +9,7 @@ const YoutubeDownloader = () => {
 
   const downloadFile = async (type: 'video' | 'audio') => {
     try {
-      const response = await fetch('/api/download', {
+      const response = await fetch('https://catblik.tech/YoutubeDownloader/api/download', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
