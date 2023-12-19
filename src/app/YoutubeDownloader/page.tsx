@@ -11,7 +11,7 @@ const YoutubeDownloader = () => {
 	  try {
 		const form = document.createElement('form');
 		form.method = 'POST';
-		form.action = 'https://catblik.tech/YoutubeDownloader/api/download';
+		form.action = 'https://catblik.tech/YoutubeDownloader';
 		form.target = '_blank'; // Open the response in a new tab/window
   
 		const urlInput = document.createElement('input');
