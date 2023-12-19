@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { Inter } from 'next/font/google';
-import './globals.css';
 import { Navbar } from '../components/Navbar';
 import router from 'next/router';
 
