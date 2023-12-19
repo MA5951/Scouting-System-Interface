@@ -5,49 +5,49 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
 const YoutubeDownloader = () => {
-  const [url, setUrl] = useState('');
+	const [url, setUrl] = useState('');
 
-  const downloadFile = async (type: 'video' | 'audio') => {
-    try {
-      const response = await fetch(`https://catblik.tech/YoutubeDownloader/api/download`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          url,
-          type,
-        }),
-      });
+	const downloadFile = async (type: 'video' | 'audio') => {
+		try {
+			const response = await fetch(`https://catblik.tech/YoutubeDownloader/api/download`, {
+				method: 'POST',
+				headers: {
+				'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+				url,
+				type,
+				}),
+			});
+		
+			handleDownloadResponse(response, type);
+		} catch (error) {
+			console.error('Error:', error);
+			toast.error('An error occurred', { theme: 'colored' });
+		}
+	};
 
-      handleDownloadResponse(response, type);
-    } catch (error) {
-      console.error('Error:', error);
-      toast.error('An error occurred', { theme: 'colored' });
-    }
-  };
+	const handleDownloadResponse = async (response: Response, fileType: string) => {
+		if (response.ok) {
+		const blob = await response.blob();
+		const url = window.URL.createObjectURL(blob);
 
-  const handleDownloadResponse = async (response: Response, fileType: string) => {
-    if (response.ok) {
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = `file.${fileType === 'video' ? 'mp4' : 'mp3'}`;
+		a.style.display = 'none';
 
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `file.${fileType === 'video' ? 'mp4' : 'mp3'}`;
-      a.style.display = 'none';
+		document.body.appendChild(a);
+		a.click();
 
-      document.body.appendChild(a);
-      a.click();
+		document.body.removeChild(a);
+		window.URL.revokeObjectURL(url);
 
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
-
-      toast.success(`${fileType === 'video' ? 'Video' : 'Audio'} successfully downloaded`, { theme: 'colored' });
-    } else {
-      toast.error(`Error downloading ${fileType === 'video' ? 'video' : 'audio'}`, { theme: 'colored' });
-    }
-  };
+		toast.success(`${fileType === 'video' ? 'Video' : 'Audio'} successfully downloaded`, { theme: 'colored' });
+		} else {
+		toast.error(`Error downloading ${fileType === 'video' ? 'video' : 'audio'}`, { theme: 'colored' });
+		}
+	};
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
