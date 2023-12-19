@@ -1,9 +1,17 @@
+// pages/api/download.ts
 "use server"
 
 import { NextApiRequest, NextApiResponse } from 'next';
 import ytdl from 'ytdl-core';
 
 export default async function downloadHandler(req: NextApiRequest, res: NextApiResponse) {
+  res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins (for testing only)
+
+  if (req.method !== 'POST') {
+    res.status(405).end(); // Method Not Allowed
+    return;
+  }
+
   const { url, type } = req.body;
 
   try {

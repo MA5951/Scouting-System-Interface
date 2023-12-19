@@ -9,7 +9,7 @@ const YoutubeDownloader = () => {
 
   const downloadFile = async (type: 'video' | 'audio') => {
     try {
-      const response = await fetch('https://catblik.tech/YoutubeDownloader/api/download', {
+      const response = await fetch(`https://catblik.tech/YoutubeDownloader/api/download`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -32,17 +32,14 @@ const YoutubeDownloader = () => {
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
 
-      // Create a link element
       const a = document.createElement('a');
       a.href = url;
       a.download = `file.${fileType === 'video' ? 'mp4' : 'mp3'}`;
       a.style.display = 'none';
 
-      // Append the link to the body and simulate a click
       document.body.appendChild(a);
       a.click();
 
-      // Clean up
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
 
