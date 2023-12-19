@@ -9,69 +9,68 @@ const YoutubeDownloader = () => {
   const [url, setUrl] = useState('');
 
   const downloadVideo = async () => {
-	try {
-	  const response = await fetch('/YoutubeDownloader/api/download', {
-		method: 'POST',
-		headers: {
-		  'Content-Type': 'application/json',
-		},
-		body: JSON.stringify({
-		  url,
-		  type: 'video',
-		}),
-	  });
+    try {
+      const response = await fetch('/YoutubeDownloader/api/download', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          url,
+          type: 'video',
+        }),
+      });
 
-	  if (response.ok) {
-		const blob = await response.blob();
-		const url = window.URL.createObjectURL(blob);
-		const a = document.createElement('a');
-		a.href = url;
-		a.download = 'video.mp4';
-		document.body.appendChild(a);
-		a.click();
-		document.body.removeChild(a);
-		window.URL.revokeObjectURL(url);
-		toast.success('Video successfully downloaded', {theme: 'colored'});
-	  } else {
-		toast.error('Error downloading video', {theme: 'colored'});
-	  }
-	} catch (error) {
-	  console.error('Error:', error);
-	  toast.error('An error occurred', {theme: 'colored'});
-	}
+      handleDownloadResponse(response, 'video');
+    } catch (error) {
+      console.error('Error:', error);
+      toast.error('An error occurred', { theme: 'colored' });
+    }
   };
 
   const downloadSound = async () => {
-	try {
-	  const response = await fetch('/YoutubeDownloader/api/download', {
-		method: 'POST',
-		headers: {
-		  'Content-Type': 'application/json',
-		},
-		body: JSON.stringify({
-		  url,
-		  type: 'sound',
-		}),
-	  });
+    try {
+      const response = await fetch('/YoutubeDownloader/api/download', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          url,
+          type: 'sound',
+        }),
+      });
 
-	  if (response.ok) {
-		const blob = await response.blob();
-		const url = window.URL.createObjectURL(blob);
-		const a = document.createElement('a');
-		a.href = url;
-		a.download = 'audio.mp3';
-		document.body.appendChild(a);
-		a.click();
-		document.body.removeChild(a);
-		window.URL.revokeObjectURL(url);
-		toast.success('Audio successfully downloaded', {theme: 'colored'});
-	  } else {
-		toast.error('Error downloading audio', {theme: 'colored'});
-	  }
-	} catch (error) {
-	  console.error('Error:', error);
-	  toast.error('An error occurred', {theme: 'colored'});
-	}
+      handleDownloadResponse(response, 'audio');
+    } catch (error) {
+      console.error('Error:', error);
+      toast.error('An error occurred', { theme: 'colored' });
+    }
+  };
+
+  const handleDownloadResponse = async (response: Response, fileType: string) => {
+    if (response.ok) {
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+
+      // Create a link element
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `file.${fileType === 'video' ? 'mp4' : 'mp3'}`;
+      a.style.display = 'none';
+
+      // Append the link to the body and simulate a click
+      document.body.appendChild(a);
+      a.click();
+
+      // Clean up
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+
+      toast.success(`${fileType === 'video' ? 'Video' : 'Audio'} successfully downloaded`, { theme: 'colored' });
+    } else {
+      toast.error(`Error downloading ${fileType === 'video' ? 'video' : 'audio'}`, { theme: 'colored' });
+    }
   };
 
   return (

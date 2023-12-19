@@ -1,5 +1,7 @@
 "use server"
 
+// server.ts
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import ytdl from 'ytdl-core';
 import ffmpeg from 'fluent-ffmpeg';
@@ -11,6 +13,7 @@ const downloadVideoByUrl = async (url: string, res: NextApiResponse) => {
 
     const format = ytdl.chooseFormat(info.formats, { quality: 'highest' });
 
+    res.setHeader('Content-Type', 'video/mp4');
     res.setHeader('Content-Disposition', `attachment; filename="${title}.mp4"`);
 
     ytdl(url, { format }).pipe(res);
@@ -26,6 +29,7 @@ const downloadSoundByUrl = async (url: string, res: NextApiResponse) => {
 
     const format = ytdl.chooseFormat(info.formats, { quality: 'highestaudio' });
 
+    res.setHeader('Content-Type', 'audio/mp3');
     res.setHeader('Content-Disposition', `attachment; filename="${title}.mp3"`);
 
     ytdl(url, { format })
