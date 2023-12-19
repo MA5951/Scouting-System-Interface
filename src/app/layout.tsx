@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '../components/Navbar';
-import router from 'next/router';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {!router.pathname.includes('urlShortner/') && <Navbar />}
+        <Navbar />
         {children}
       </body>
     </html>
