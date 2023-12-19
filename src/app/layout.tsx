@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {!pathname.includes('urlShortner/') && <Navbar />}
+        {pathname.includes('/urlShortner') && pathname != '/urlShortner' && <Navbar />}
         {children}
       </body>
     </html>
