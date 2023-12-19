@@ -1,50 +1,54 @@
 // src/app/YoutubeDownloader/page.tsx
 "use client"
 
-import Link from 'next/link';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import * as ytdl from 'ytdl-core';
 
 const YoutubeDownloader = () => {
   const [url, setUrl] = useState('');
 
 	const downloadVideo = async () => {
 		try {
-		const response = await fetch('/api/download', {  // Replace with your actual endpoint
-			method: 'POST',
-			headers: {
-			'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-			url,
-			type: 'video',
-			}),
-		});
-	
-		handleDownloadResponse(response, 'video');
+		const videoInfo = await ytdl.getBasicInfo(url);
+		const title = videoInfo.videoDetails.title;
+
+		const format = ytdl.chooseFormat(videoInfo.formats, { quality: 'highest' });
+		const videoUrl = format.url;
+
+		const a = document.createElement('a');
+		a.href = videoUrl;
+		a.download = `${title}.mp4`;
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+
+		toast.success('Video successfully downloaded', { theme: 'colored' });
 		} catch (error) {
 		console.error('Error:', error);
-		toast.error('An error occurred', { theme: 'colored' });
+		toast.error('Error downloading video', { theme: 'colored' });
 		}
 	};
-	
+
 	const downloadSound = async () => {
 		try {
-		const response = await fetch('/api/download', {  // Replace with your actual endpoint
-			method: 'POST',
-			headers: {
-			'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-			url,
-			type: 'sound',
-			}),
-		});
-	
-		handleDownloadResponse(response, 'audio');
+		const videoInfo = await ytdl.getBasicInfo(url);
+		const title = videoInfo.videoDetails.title;
+
+		const format = ytdl.chooseFormat(videoInfo.formats, { quality: 'highestaudio' });
+		const audioUrl = format.url;
+
+		const a = document.createElement('a');
+		a.href = audioUrl;
+		a.download = `${title}.mp3`;
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+
+		toast.success('Audio successfully downloaded', { theme: 'colored' });
 		} catch (error) {
 		console.error('Error:', error);
-		toast.error('An error occurred', { theme: 'colored' });
+		toast.error('Error downloading audio', { theme: 'colored' });
 		}
 	};
 
