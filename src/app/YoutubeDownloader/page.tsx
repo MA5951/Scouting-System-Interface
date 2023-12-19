@@ -31,12 +31,13 @@ const YoutubeDownloader = () => {
 		a.click();
 		document.body.removeChild(a);
 		window.URL.revokeObjectURL(url);
+		toast.success('Video successfully downloaded', {theme: 'colored'});
 	  } else {
-		toast.error('Error downloading video', {theme: 'dark'});
+		toast.error('Error downloading video', {theme: 'colored'});
 	  }
 	} catch (error) {
 	  console.error('Error:', error);
-	  toast.error('An error occurred', {theme: 'dark'});
+	  toast.error('An error occurred', {theme: 'colored'});
 	}
   };
 
@@ -63,12 +64,13 @@ const YoutubeDownloader = () => {
 		a.click();
 		document.body.removeChild(a);
 		window.URL.revokeObjectURL(url);
+		toast.success('Audio successfully downloaded', {theme: 'colored'});
 	  } else {
-		toast.error('Error downloading audio', {theme: 'dark'});
+		toast.error('Error downloading audio', {theme: 'colored'});
 	  }
 	} catch (error) {
 	  console.error('Error:', error);
-	  toast.error('An error occurred', {theme: 'dark'});
+	  toast.error('An error occurred', {theme: 'colored'});
 	}
   };
 
