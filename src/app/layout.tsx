@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from 'react';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '../components/Navbar';
 import { usePathname } from 'next/navigation';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,6 +20,7 @@ export default function RootLayout({
       <body className={inter.className}>
         {!(pathname.includes('urlShortner/') && pathname != 'urlShortner/') && <Navbar />}
         {children}
+        <ToastContainer />
       </body>
     </html>
   );

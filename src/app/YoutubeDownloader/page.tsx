@@ -3,6 +3,7 @@
 
 import Link from 'next/link';
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const YoutubeDownloader = () => {
   const [url, setUrl] = useState('');
@@ -31,11 +32,11 @@ const YoutubeDownloader = () => {
 		document.body.removeChild(a);
 		window.URL.revokeObjectURL(url);
 	  } else {
-		alert('Error downloading video');
+		toast.error('Error downloading video', {theme: 'dark'});
 	  }
 	} catch (error) {
 	  console.error('Error:', error);
-	  alert('An error occurred');
+	  toast.error('An error occurred', {theme: 'dark'});
 	}
   };
 
@@ -63,11 +64,11 @@ const YoutubeDownloader = () => {
 		document.body.removeChild(a);
 		window.URL.revokeObjectURL(url);
 	  } else {
-		alert('Error downloading audio');
+		toast.error('Error downloading audio', {theme: 'dark'});
 	  }
 	} catch (error) {
 	  console.error('Error:', error);
-	  alert('An error occurred');
+	  toast.error('An error occurred', {theme: 'dark'});
 	}
   };
 
