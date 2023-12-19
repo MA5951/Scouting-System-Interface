@@ -9,27 +9,11 @@ const YoutubeDownloader = () => {
   
 	const handleSubmit = async (type: 'video' | 'audio') => {
 	  try {
-		const form = document.createElement('form');
-		form.method = 'POST';
-		form.action = 'https://catblik.tech/YoutubeDownloader'; // Update the action URL
-		form.target = '_blank'; // Open the response in a new tab/window
+		// Construct the download URL
+		const downloadUrl = `https://catblik.tech/YoutubeDownloader?type=${type}&url=${encodeURIComponent(url)}`;
   
-		const urlInput = document.createElement('input');
-		urlInput.type = 'hidden';
-		urlInput.name = 'url';
-		urlInput.value = url;
-  
-		const typeInput = document.createElement('input');
-		typeInput.type = 'hidden';
-		typeInput.name = 'type';
-		typeInput.value = type;
-  
-		form.appendChild(urlInput);
-		form.appendChild(typeInput);
-  
-		document.body.appendChild(form);
-		form.submit();
-		document.body.removeChild(form);
+		// Open the download URL in a new tab
+		window.open(downloadUrl, '_blank');
   
 		toast.success(`${type === 'video' ? 'Video' : 'Audio'} download started`, { theme: 'colored' });
 	  } catch (error) {
