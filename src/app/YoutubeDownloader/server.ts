@@ -1,57 +1,30 @@
-"use server"
+// src/pages/api/download.ts
+// This is a Server Component file
 
-// server.ts
+"use server"
 
 import { NextApiRequest, NextApiResponse } from 'next';
 import ytdl from 'ytdl-core';
-import ffmpeg from 'fluent-ffmpeg';
 
-const downloadVideoByUrl = async (url: string, res: NextApiResponse) => {
-  try {
-    const info = await ytdl.getInfo(url);
-    const title = info.videoDetails.title;
-
-    const format = ytdl.chooseFormat(info.formats, { quality: 'highest' });
-
-    res.setHeader('Content-Type', 'video/mp4');
-    res.setHeader('Content-Disposition', `attachment; filename="${title}.mp4"`);
-
-    ytdl(url, { format }).pipe(res);
-  } catch (error) {
-    res.status(500).json({ error: 'Error downloading video' });
-  }
-};
-
-const downloadSoundByUrl = async (url: string, res: NextApiResponse) => {
-  try {
-    const info = await ytdl.getInfo(url);
-    const title = info.videoDetails.title;
-
-    const format = ytdl.chooseFormat(info.formats, { quality: 'highestaudio' });
-
-    res.setHeader('Content-Type', 'audio/mp3');
-    res.setHeader('Content-Disposition', `attachment; filename="${title}.mp3"`);
-
-    ytdl(url, { format })
-      .pipe(ffmpeg().input('pipe:0').outputFormat('mp3').pipe(res));
-  } catch (error) {
-    res.status(500).json({ error: 'Error downloading audio' });
-  }
-};
-
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function downloadHandler(req: NextApiRequest, res: NextApiResponse) {
   const { url, type } = req.body;
 
-  if (!url || !type) {
-    res.status(400).json({ error: 'Missing URL or type' });
-    return;
-  }
+  try {
+    if (!url || !type) {
+      res.status(400).json({ error: 'Missing URL or type' });
+      return;
+    }
 
-  if (type === 'video') {
-    await downloadVideoByUrl(url, res);
-  } else if (type === 'sound') {
-    await downloadSoundByUrl(url, res);
-  } else {
-    res.status(400).json({ error: 'Invalid type' });
+    const videoInfo = await ytdl.getBasicInfo(url);
+    const format = type === 'video' ? ytdl.chooseFormat(videoInfo.formats, { quality: 'highest' }) : ytdl.chooseFormat(videoInfo.formats, { quality: 'highestaudio' });
+    const videoStream = ytdl(url, { format });
+
+    res.setHeader('Content-Disposition', `attachment; filename="${videoInfo.videoDetails.title}.${type === 'video' ? 'mp4' : 'mp3'}"`);
+    res.setHeader('Content-Type', type === 'video' ? 'video/mp4' : 'audio/mp3');
+
+    videoStream.pipe(res);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: `Error downloading ${type === 'video' ? 'video' : 'audio'}` });
   }
-};
+}
