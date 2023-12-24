@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { makeShortnedUrl } from "./server";
 import url from 'url';
 import '@/src/app/globals.css'
+import { toast } from 'react-toastify';
 
 const UrlShortener = () => {
 	const [inputUrl, setInputUrl] = useState('');
@@ -24,14 +25,21 @@ const UrlShortener = () => {
 			setShortenedUrl(data.shortUrl);
 		} catch (error) {
 			console.error('Error shortening URL:', error);
+			toast.error('Error shortening URL', {theme: 'colored'});
 		}
 	};
 
 	const [res, setRes] = useState<string | null>(null);
 
 	const handleClick = async (origin: string, added: string) => {
+		const id = toast.loading("Please wait...")
 		const response = await makeShortnedUrl(origin, added);
-		setRes(response);
+		if (response.includes('Catblik')) {
+			setRes(response);
+			toast.update(id, {render: "Shortned URL successfully generated!", type: "success", autoClose: 2000, theme: 'colored'});
+		} else {
+			toast.update(id, {render: "Error shortening URL", type: "error", autoClose: 2000, theme: 'colored'});
+		}
 	};
 	
 	return (
@@ -55,8 +63,8 @@ const UrlShortener = () => {
 			</div>
 			<button className='purpleButton' onClick={() => handleClick(inputUrl, shortenedUrl)}>Shorten</button>
 			<div style={{display: 'flex', gap: '10px', alignItems: 'center', marginTop: '10px'}}>
-				{res && <p style={{color: 'white', backgroundColor: 'rgb(43, 45, 49)', padding: '10px', borderRadius: '5px', border: 'none', cursor: 'pointer'}}>{res}</p>}
-				{res && (url.parse(res)?.protocol || url.parse(res)?.hostname) && <button className='purpleButton' onClick={() => {navigator.clipboard.writeText(res)}}>{'📋'}</button>}
+				{res != null && <p style={{color: 'white', backgroundColor: 'rgb(43, 45, 49)', padding: '10px', borderRadius: '5px', border: 'none', cursor: 'pointer'}}>{res}</p>}
+				{res != null && (url.parse(res)?.protocol || url.parse(res)?.hostname) && <button className='purpleButton' onClick={() => {navigator.clipboard.writeText(res)}}>{'📋'}</button>}
 			</div>
 		</div>
 	);
