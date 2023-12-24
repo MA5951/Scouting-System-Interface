@@ -32,13 +32,26 @@ const UrlShortener = () => {
 	const [res, setRes] = useState<string | null>(null);
 
 	const handleClick = async (origin: string, added: string) => {
-		const id = toast.loading("Generating shortned URL...", {theme: 'dark'});
-		const response = await makeShortnedUrl(origin, added);
+		let response: React.SetStateAction<string | null> | string[];
+		const resolveByResponse = new Promise(resolve => {response != null});
+		toast.promise(
+			resolveByResponse,
+			{
+			pending: 'Generating shortned URL...',
+			success: 'Shortned URL successfully generated! 👌',
+			error: 'Error shortening URL 🤯'
+			}
+		)
+
+
+		// const id = toast.loading("Generating shortned URL...", {theme: 'dark'});
+		response = await makeShortnedUrl(origin, added);
 		if (response.includes('catblik') || response.includes('Catblik')) {
 			setRes(response);
-			toast.update(id, {render: "Shortned URL successfully generated!", type: "success", autoClose: 2000, theme: 'colored'});
+			// toast.update(id, {render: "Shortned URL successfully generated!", type: "success", autoClose: 2000, theme: 'colored'});
 		} else {
-			toast.update(id, {render: "Error shortening URL", type: "error", autoClose: 2000, theme: 'colored'});
+			setRes(response);
+			// toast.update(id, {render: "Error shortening URL", type: "error", autoClose: 2000, theme: 'colored'});
 		}
 	};
 	
