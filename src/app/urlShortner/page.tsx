@@ -33,7 +33,7 @@ const UrlShortener = () => {
 
 	const handleClick = async (origin: string, added: string) => {
 		let response: React.SetStateAction<string | null> | string[];
-		const resolveByResponse = new Promise(resolve => {response != null});
+		let resolveByResponse = new Promise(resolve => {response != null});
 		toast.promise(
 			resolveByResponse,
 			{
@@ -47,10 +47,12 @@ const UrlShortener = () => {
 		// const id = toast.loading("Generating shortned URL...", {theme: 'dark'});
 		response = await makeShortnedUrl(origin, added);
 		if (response.includes('catblik') || response.includes('Catblik')) {
+			resolveByResponse = Promise.resolve('Shortned URL successfully generated! 👌');
 			setRes(response);
 			// toast.update(id, {render: "Shortned URL successfully generated!", type: "success", autoClose: 2000, theme: 'colored'});
 		} else {
 			setRes(response);
+			resolveByResponse = Promise.reject('Error shortening URL 🤯');
 			// toast.update(id, {render: "Error shortening URL", type: "error", autoClose: 2000, theme: 'colored'});
 		}
 	};
