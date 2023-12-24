@@ -47,12 +47,12 @@ const UrlShortener = () => {
 		// const id = toast.loading("Generating shortned URL...", {theme: 'dark'});
 		response = await makeShortnedUrl(origin, added);
 		if (response.includes('catblik') || response.includes('Catblik')) {
-			resolveByResponse = Promise.resolve('Shortned URL successfully generated! 👌');
+			resolveByResponse = Promise.resolve();
 			setRes(response);
 			// toast.update(id, {render: "Shortned URL successfully generated!", type: "success", autoClose: 2000, theme: 'colored'});
 		} else {
 			setRes(response);
-			resolveByResponse = Promise.reject('Error shortening URL 🤯');
+			resolveByResponse = Promise.reject();
 			// toast.update(id, {render: "Error shortening URL", type: "error", autoClose: 2000, theme: 'colored'});
 		}
 	};
