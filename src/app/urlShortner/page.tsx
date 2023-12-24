@@ -32,10 +32,9 @@ const UrlShortener = () => {
 	const [res, setRes] = useState<string | null>(null);
 
 	const handleClick = async (origin: string, added: string) => {
-	toast.info("Generating shortned URL...", {theme: 'dark'});
 		const id = toast.loading("Generating shortned URL...", {theme: 'dark'});
 		const response = await makeShortnedUrl(origin, added);
-		if (response.includes('Catblik')) {
+		if (response.includes('catblik') || response.includes('Catblik')) {
 			setRes(response);
 			toast.update(id, {render: "Shortned URL successfully generated!", type: "success", autoClose: 2000, theme: 'colored'});
 		} else {
