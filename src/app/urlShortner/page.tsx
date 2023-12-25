@@ -57,11 +57,12 @@ const UrlShortener = () => {
 			resolveByResponse();
 		  } else {
 			setRes(null);
-			resolveByResponse();
+			resolveByResponse(undefined);
 			toast.error(response);
 		  }
 		} catch (error) {
 		  console.error(error);
+		  resolveByResponse(undefined);
 		  toast.error('An error occurred while shortening the URL');
 		}
 	};
