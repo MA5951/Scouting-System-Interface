@@ -56,6 +56,7 @@ const UrlShortener = () => {
 			resolveByResponse();
 		  } else {
 			setRes(null);
+			resolveByResponse();
 			toast.error(response);
 		  }
 		} catch (error) {
