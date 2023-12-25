@@ -32,38 +32,37 @@ const UrlShortener = () => {
 	const [res, setRes] = useState<string | null>(null);
 
 	const handleClick = async (origin: string, added: string) => {
-		let response: React.SetStateAction<string | null> | string[];
-		let resolveByResponse!: (value?: void | PromiseLike<void> | undefined) => void; // Use the "!" to tell TypeScript that it will be assigned
-
-		const promise = new Promise<void>(resolve => {
-			resolveByResponse = resolve;
+		let resolveByResponse!: (value: void | Promise<void>) => void;
+		
+		const promise = new Promise<void>((resolve) => {
+		  resolveByResponse = resolve;
 		});
-	  
+		
 		toast.promise(
 		  promise,
 		  {
 			pending: 'Generating shortened URL...',
 			success: 'Shortened URL successfully generated! 👌',
 			error: 'Error shortening URL 🤯',
-		  }, 
-		  {theme: 'dark'}
+		  },
+		  { theme: 'dark' }
 		);
-	  
+		
 		try {
-		  response = await makeShortnedUrl(origin, added);
+		  const response = await makeShortnedUrl(origin, added);
 	  
 		  if (response.includes('catblik') || response.includes('Catblik')) {
 			setRes(response);
-			resolveByResponse();
+			resolveByResponse(); // Resolve without an argument for success
 		  } else {
 			setRes(null);
-			resolveByResponse(undefined);
 			toast.error(response);
+			resolveByResponse(Promise.reject()); // Reject the promise for error
 		  }
 		} catch (error) {
 		  console.error(error);
-		  resolveByResponse(undefined);
 		  toast.error('An error occurred while shortening the URL');
+		  resolveByResponse(Promise.reject()); // Reject the promise for error
 		}
 	};
 	
