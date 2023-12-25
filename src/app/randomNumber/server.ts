@@ -5,7 +5,7 @@
 export async function makeRandomNumber(min:number, max:number) {
   let error = "";
 
-  if (min == undefined || max == undefined) {
+  if (min == undefined || max == undefined || min == null || max == null) {
     error = "Min and max values must be defined";
   } else if (min > max) {
     error = "Min must be lower than max";
