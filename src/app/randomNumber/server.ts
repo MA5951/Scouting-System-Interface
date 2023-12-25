@@ -6,11 +6,11 @@ export async function makeRandomNumber(min:number, max:number) {
   let error = "";
 
   if (min == undefined || max == undefined) {
-    error = "Error: min and max must be defined";
+    error = "Min and max values must be defined";
   } else if (min > max) {
-    error = "Error: min must be less than max";
+    error = "Min must be lower than max";
   } else if (min == max) {
-    error = "Error: min must not equal max";
+    error = "EMin must not be equal to max";
   } 
 
   if (error == "") {
