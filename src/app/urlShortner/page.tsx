@@ -45,7 +45,7 @@ const UrlShortener = () => {
 			pending: 'Generating shortened URL...',
 			success: 'Shortened URL successfully generated! 👌',
 			error: 'Error shortening URL 🤯',
-		  }
+		  }, {theme: 'dark'}
 		);
 	  
 		try {
