@@ -33,27 +33,37 @@ const UrlShortener = () => {
 
 	const handleClick = async (origin: string, added: string) => {
 		let response: React.SetStateAction<string | null> | string[];
-		let resolveByResponse = new Promise(resolve => {response != null});
+		let resolveByResponse!: () => void; // Use the "!" to tell TypeScript that it will be assigned
+	  
+		const promise = new Promise<void>(resolve => {
+		  resolveByResponse = resolve;
+		});
+	  
 		toast.promise(
-			resolveByResponse,
-			{
-			pending: 'Generating shortned URL...',
-			success: 'Shortned URL successfully generated! 👌',
-			error: 'Error shortening URL 🤯'
-			}
-		)
-
-
-		// const id = toast.loading("Generating shortned URL...", {theme: 'dark'});
-		response = await makeShortnedUrl(origin, added);
-		if (response.includes('catblik') || response.includes('Catblik')) {
-			resolveByResponse = Promise.resolve();
+		  promise,
+		  {
+			pending: 'Generating shortened URL...',
+			success: 'Shortened URL successfully generated! 👌',
+			error: 'Error shortening URL 🤯',
+		  }
+		);
+	  
+		try {
+		  response = await makeShortnedUrl(origin, added);
+	  
+		  if (response.includes('catblik') || response.includes('Catblik')) {
 			setRes(response);
-			// toast.update(id, {render: "Shortned URL successfully generated!", type: "success", autoClose: 2000, theme: 'colored'});
-		} else {
+			resolveByResponse(); // Now TypeScript knows it's assigned
+		  } else {
 			setRes(response);
-			resolveByResponse = Promise.reject();
-			// toast.update(id, {render: "Error shortening URL", type: "error", autoClose: 2000, theme: 'colored'});
+			// Show error using toast
+			toast.error('Unexpected response');
+		  }
+		} catch (error) {
+		  // Handle the error, if needed
+		  console.error(error);
+		  // Show error using toast
+		  toast.error('An error occurred while shortening the URL');
 		}
 	};
 	
