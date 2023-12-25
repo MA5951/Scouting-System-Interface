@@ -25,7 +25,7 @@ const UrlShortener = () => {
 			setShortenedUrl(data.shortUrl);
 		} catch (error) {
 			console.error('Error shortening URL:', error);
-			toast.error('Error shortening URL', {theme: 'colored'});
+			toast.error('Error shortening URL', {theme: 'dark'});
 		}
 	};
 
