@@ -13,7 +13,7 @@ const UrlShortener = () => {
 
   const handleClick = async (minS: number, maxS: number) => {
     const response = await makeRandomNumber(minS, maxS)
-    if (/^[0-9]+$/.test(response)) {
+    if (!(/^[0-9]+$/.test(response))) {
       toast.error(response)
       setRes(null);
     } else {
