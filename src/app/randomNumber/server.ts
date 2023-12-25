@@ -10,7 +10,7 @@ export async function makeRandomNumber(min:number, max:number) {
   } else if (min > max) {
     error = "Min must be lower than max";
   } else if (min == max) {
-    error = "EMin must not be equal to max";
+    error = "Min must not be equal to max";
   } 
 
   if (error == "") {
