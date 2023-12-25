@@ -53,16 +53,13 @@ const UrlShortener = () => {
 	  
 		  if (response.includes('catblik') || response.includes('Catblik')) {
 			setRes(response);
-			resolveByResponse(); // Now TypeScript knows it's assigned
+			resolveByResponse();
 		  } else {
-			setRes(response);
-			// Show error using toast
-			toast.error('Unexpected response');
+			setRes(null);
+			toast.error('response');
 		  }
 		} catch (error) {
-		  // Handle the error, if needed
 		  console.error(error);
-		  // Show error using toast
 		  toast.error('An error occurred while shortening the URL');
 		}
 	};
