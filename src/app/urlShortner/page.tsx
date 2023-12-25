@@ -33,10 +33,10 @@ const UrlShortener = () => {
 
 	const handleClick = async (origin: string, added: string) => {
 		let response: React.SetStateAction<string | null> | string[];
-		let resolveByResponse!: () => void; // Use the "!" to tell TypeScript that it will be assigned
-	  
+		let resolveByResponse!: (value?: void | PromiseLike<void> | undefined) => void; // Use the "!" to tell TypeScript that it will be assigned
+
 		const promise = new Promise<void>(resolve => {
-		  resolveByResponse = resolve;
+			resolveByResponse = resolve;
 		});
 	  
 		toast.promise(
@@ -45,7 +45,8 @@ const UrlShortener = () => {
 			pending: 'Generating shortened URL...',
 			success: 'Shortened URL successfully generated! 👌',
 			error: 'Error shortening URL 🤯',
-		  }, {theme: 'dark'}
+		  }, 
+		  {theme: 'dark'}
 		);
 	  
 		try {
