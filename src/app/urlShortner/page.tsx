@@ -43,7 +43,8 @@ const UrlShortener = () => {
 		  {
 			pending: 'Generating shortened URL...',
 			success: 'Shortened URL successfully generated! 👌',
-			error: 'Error shortening URL 🤯',
+			// error: 'Error shortening URL 🤯',
+			error: `${Response}`,
 		  },
 		  { theme: 'dark' }
 		);
