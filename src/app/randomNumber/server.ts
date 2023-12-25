@@ -5,14 +5,12 @@
 export async function makeRandomNumber(min:number, max:number) {
   let error = "";
 
-  if (min > max) {
-    error = "Error: min is greater than max"
+  if (min == undefined || max == undefined) {
+    error = "Error: min and max must be defined";
+  } else if (min > max) {
+    error = "Error: min must be less than max";
   } else if (min == max) {
-    error = "Error: min is equal to max"
-  } else if (min == undefined || min == null) {
-    error = "Error: minimum number is undefined"
-  } else if (max == null || max == undefined) {
-    error = "Error: maximum number is null"
+    error = "Error: min must not equal max";
   } 
 
   if (error == "") {

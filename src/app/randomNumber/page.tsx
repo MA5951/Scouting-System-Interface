@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { makeRandomNumber } from "./server";
 import Link from 'next/link';
+import { toast } from 'react-toastify';
 
 const UrlShortener = () => {
   const [MinNumber, setMinNumber] = useState('');
@@ -12,7 +13,13 @@ const UrlShortener = () => {
 
   const handleClick = async (minS: number, maxS: number) => {
     const response = await makeRandomNumber(minS, maxS)
-    setRes(response);
+    if (response.includes('Error')) {
+      toast.error(response)
+      setRes(null);
+    }
+    else {
+      setRes(response);
+    }
   }
 
   return (
@@ -37,7 +44,7 @@ const UrlShortener = () => {
         </div>
       </div>
       <button className='purpleButton' onClick={() => handleClick(Number(MinNumber), Number(MaxNumber))}>Gimmi Random</button>
-      {res && <p style={{ color: 'white' }}>{res}</p>}
+      {res != null && <p style={{ color: 'white' }}>{res}</p>}
     </div>
   );
 };
