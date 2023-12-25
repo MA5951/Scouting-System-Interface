@@ -33,22 +33,23 @@ const UrlShortener = () => {
 
 	const handleClick = async (origin: string, added: string) => {
 		let resolveByResponse!: (value: void | Promise<void>) => void;
-		
+	  
 		const promise = new Promise<void>((resolve) => {
 		  resolveByResponse = resolve;
 		});
-		
+	  
 		toast.promise(
 		  promise,
 		  {
 			pending: 'Generating shortened URL...',
 			success: 'Shortened URL successfully generated! 👌',
-			// error: 'Error shortening URL 🤯',
-			error: `${Response}`,
+			error: {
+			  render: ({ data }) => `Error shortening URL: ${data}`, // Display the error message
+			},
 		  },
 		  { theme: 'dark' }
 		);
-		
+	  
 		try {
 		  const response = await makeShortnedUrl(origin, added);
 	  
@@ -57,13 +58,12 @@ const UrlShortener = () => {
 			resolveByResponse(); // Resolve without an argument for success
 		  } else {
 			setRes(null);
-			toast.error(response);
-			resolveByResponse(Promise.reject()); // Reject the promise for error
+			resolveByResponse(Promise.reject(response)); // Reject the promise with the error message
 		  }
 		} catch (error) {
 		  console.error(error);
-		  toast.error('An error occurred while shortening the URL');
-		  resolveByResponse(Promise.reject()); // Reject the promise for error
+		  setRes(null);
+		  resolveByResponse(Promise.reject(console.error.toString)); // Reject the promise with the error message
 		}
 	};
 	
