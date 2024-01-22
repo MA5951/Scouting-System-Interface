@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {!(pathname.includes('urlShortner/') && pathname != 'urlShortner/') && <Navbar />}
+        {!(pathname.includes('urlShortner/') && pathname != 'urlShortner/') && !pathname.includes('scouting') && <Navbar />}
         {children}
         <ToastContainer />
       </body>

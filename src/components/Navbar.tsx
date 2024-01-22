@@ -11,7 +11,8 @@ enum Page {
     UrlShortener = '/urlShortner',
     RandomNumber = '/randomNumber',
     YoutubeDownloader = '/YoutubeDownloader',
-    SortingAlgorithms = '/sortingAlgorithms'
+    SortingAlgorithms = '/sortingAlgorithms',
+    Scouting = '/scouting'
 }
 
 type Props = {}
@@ -45,6 +46,9 @@ export const Navbar = (props: Props) => {
             </Link>
             <Link className={getButtonClassName(Page.SortingAlgorithms)}
                 href={'/sortingAlgorithms'} style={{ marginRight: '10px' }}>Sorting Algorithms
+            </Link>
+            <Link className={getButtonClassName(Page.Scouting)}
+                href={'/scouting'} style={{ marginRight: '10px' }}>Scouting
             </Link>
             <button className='purpleButton' onClick={() => setIsGalGolOpen(true)} style={{zIndex: "999999"}}>
                 Open Popup
