@@ -60,10 +60,33 @@ const Scouting = () => {
     const x = Math.round((event.clientX - boundingRect.left) * xScale);
     const y = Math.round((event.clientY - boundingRect.top) * yScale);
 
-    console.log(xScale)
-  
-    toast.info(`Clicked Coordinates: X: ${x}, Y: ${y}`);
+    // Draw a green circle on the canvas at the clicked coordinates
+    drawGreenCircle(canvas, x / xScale, y / yScale);
+
+    // Log the scaled coordinates to the console
+    console.log(x, y);
+
+    // Update the state with the original unscaled coordinates
     setClickedCoordinates({ x, y });
+  };
+
+  // Function to draw a green circle on the canvas at the specified coordinates
+  const drawGreenCircle = (canvas: HTMLCanvasElement, x: number, y: number) => {
+    const ctx = canvas.getContext('2d');
+  
+    // Check if ctx is not null before using it
+    if (ctx !== null) {
+      // Set the circle color to green
+      ctx.fillStyle = 'green';
+  
+      // Draw a green circle at the specified coordinates
+      ctx.beginPath();
+      ctx.arc(x, y, 5, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.closePath();
+    } else {
+      console.error('CanvasRenderingContext2D is null. Unable to draw the green circle.');
+    }
   };
 
   useEffect(() => {
