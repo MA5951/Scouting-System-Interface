@@ -21,7 +21,7 @@ const Scouting = () => {
 
       if (result.success) {
         toast.success('Request processed successfully');
-        router.refresh();
+        router.replace("/scouting");
       } else {
         toast.error(result.error || 'Failed to process the request');
       }
@@ -43,7 +43,7 @@ const Scouting = () => {
 
         if (result.success) {
           toast.success('Request processed successfully');
-          router.refresh();
+          router.replace("/scouting");
         } else {
           toast.error(result.error || 'Failed to process the request');
         }
