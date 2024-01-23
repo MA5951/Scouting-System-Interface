@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { resetHttpRequest, sendHttpRequest } from './actions';
+import Router from 'next/router';
 
 const Scouting = () => {
   const [teamNumber, setTeamNumber] = useState('');
@@ -19,6 +20,7 @@ const Scouting = () => {
 
       if (result.success) {
         toast.success('Request processed successfully');
+        Router.reload();
       } else {
         toast.error(result.error || 'Failed to process the request');
       }
@@ -40,6 +42,7 @@ const Scouting = () => {
 
         if (result.success) {
           toast.success('Request processed successfully');
+          Router.reload();
         } else {
           toast.error(result.error || 'Failed to process the request');
         }
