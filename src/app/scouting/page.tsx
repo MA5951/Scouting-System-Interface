@@ -4,10 +4,10 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { resetHttpRequest, sendHttpRequest } from './actions';
-import Router, { useRouter } from 'next/router';
+import {useRouter} from 'next/navigation';
 
 const Scouting = () => {
-  const routerInstance = useRouter();
+  const router = useRouter();
   const [teamNumber, setTeamNumber] = useState('');
   const [clickedCoordinates, setClickedCoordinates] = useState<{ x: number | null; y: number | null }>({ x: null, y: null });
 
@@ -21,7 +21,7 @@ const Scouting = () => {
 
       if (result.success) {
         toast.success('Request processed successfully');
-        routerInstance.push('/scouting');
+        router.refresh();
       } else {
         toast.error(result.error || 'Failed to process the request');
       }
@@ -43,7 +43,7 @@ const Scouting = () => {
 
         if (result.success) {
           toast.success('Request processed successfully');
-          routerInstance.push('/scouting');
+          router.refresh();
         } else {
           toast.error(result.error || 'Failed to process the request');
         }
