@@ -10,14 +10,14 @@ const Scouting = () => {
   const router = useRouter();
   const [teamNumber, setTeamNumber] = useState('');
 
-  let shootCoordinatesArray: { x: number; y: number; }[] = [];
+  const shootCoordinatesArray: { x: number; y: number; }[] = [];
 
   const addToShootCordinates = (x: number, y: number) => {
     shootCoordinatesArray.push({ x, y });
   }
 
   const resetArrays = () => {
-    shootCoordinatesArray = [];
+    shootCoordinatesArray.length = 0;
   }
 
   const handleClick = async () => {
@@ -34,6 +34,7 @@ const Scouting = () => {
 
       if (result.success) {
         toast.success('Request processed successfully');
+        resetArrays();
         router.replace("/scouting");
       } else {
         toast.error(result.error || 'Failed to process the request');
@@ -60,6 +61,7 @@ const Scouting = () => {
 
         if (result.success) {
           toast.success('Request processed successfully');
+          resetArrays();
           router.replace("/scouting");
         } else {
           toast.error(result.error || 'Failed to process the request');
