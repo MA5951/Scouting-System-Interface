@@ -3,26 +3,27 @@
 // Import necessary dependencies
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { resetHttpRequest, sendHttpRequest } from './actions';
-import {useRouter} from 'next/navigation';
+import { editHttpRequest, resetHttpRequest } from './actions';
+import { useRouter } from 'next/navigation';
 
 // curl -X POST -H "Content-Type: application/json" -d "{\"action\": \"edit\", \"team_number\": 5951, \"ScoreCoordinates\": [[100, 500], [300, 400], [500, 600]], \"MissCoordinates\": [[500, 200], [800, 400], [1000, 100]], \"PoseCoordinates\": [[1500, 500], [1600, 400], [1700, 600]]}" https://MA5951.pythonanywhere.com/update_image
+// curl -X POST -H "Content-Type: application/json" -d "{\"action\": \"reset\", \"team_number\": 5951}" https://MA5951.pythonanywhere.com/update_image
 
 const Scouting = () => {
-  const router = useRouter();
-  const [teamNumber, setTeamNumber] = useState('');
-
-  const shootCoordinatesArray: { x: number; y: number; }[] = [];
-  const missCoordinatesArray: { x: number; y: number; }[] = [];
-  const poseCoordinates = { x: 0, y: 0 };
-
   enum brushes {
     shoot,
     miss,
     pose
   }
 
-  let selectedBrushValue = brushes.shoot;
+  const router = useRouter();
+  const [teamNumber, setTeamNumber] = useState('');
+  const [selectedBrushValue, setSelectedBrushValue] = useState<brushes>(brushes.shoot);
+  const [shootCoordinates, setShootCoordinates] = useState<[number, number][]>([]);
+  const [missCoordinates, setMissCoordinates] = useState<[number, number][]>([]);
+  const [poseCoordinates, setPoseCoordinates] = useState<[number, number][]>([[0,0]]);
+  const [resetText, setResetText] = useState<string>('');
+
 
   const getShootButtonClassName = () => {
     return selectedBrushValue === brushes.shoot ? 'disabledredButton' : 'redButton';
@@ -37,40 +38,27 @@ const Scouting = () => {
   };
 
   const setToMissBrush = () => {
-    selectedBrushValue = brushes.miss;
+    setSelectedBrushValue(brushes.miss);
     console.log(selectedBrushValue);
   }
 
   const setToScoreBrush = () => {
-    selectedBrushValue = brushes.shoot;
+    setSelectedBrushValue(brushes.shoot);
     console.log(selectedBrushValue);
   }
 
   const setToPoseBrush = () => {
-    if (poseCoordinates.x === 0 && poseCoordinates.y === 0){
-      selectedBrushValue = brushes.pose;
+    if (poseCoordinates[0][0] === 0 && poseCoordinates[0][1] === 0){
+      setSelectedBrushValue(brushes.pose);
       console.log(selectedBrushValue);
     } else {
       toast.error('Start pose already set', {theme: 'colored'});
     }
   }
 
-  const addToShootCordinates = (x: number, y: number) => {
-    shootCoordinatesArray.push({ x, y });
-  }
-
-  const addToMissCordinates = (x: number, y: number) => {
-    missCoordinatesArray.push({ x, y });
-  }
-
-  const resetArrays = () => {
-    shootCoordinatesArray.length = 0;
-    missCoordinatesArray.length = 0;
-  }
-
   const handleClick = async () => {
-    if (shootCoordinatesArray.length === 0 && missCoordinatesArray.length === 0 && poseCoordinates.x === 0 && poseCoordinates.y === 0) {
-      console.log(shootCoordinatesArray);
+    if (shootCoordinates.length === 0 && missCoordinates.length === 0 && poseCoordinates[0][0] === 0 && poseCoordinates[0][1] === 0) {
+      console.log(shootCoordinates);
       toast.error('Please click on the field to add coordinates', {theme: 'colored'});
       return;
     } else if (teamNumber === '') {
@@ -78,17 +66,16 @@ const Scouting = () => {
       return;
     }
     try {
-      const result = await sendHttpRequest({
-        action: 'edit',
+      const result = await editHttpRequest({
         team_number: Number(teamNumber),
-        ScoreCoordinates: shootCoordinatesArray,
-        MissCoordinates: missCoordinatesArray,
+        ScoreCoordinates: shootCoordinates,
+        MissCoordinates: missCoordinates,
         PoseCoordinates: poseCoordinates
       });
 
       if (result.success) {
         toast.success('Request processed successfully', {theme: 'colored'});
-        resetArrays();
+        router.push('/scouting/refresh');
       } else {
         toast.error(result.error || 'Failed to process the request', {theme: 'colored'});
       }
@@ -110,15 +97,8 @@ const Scouting = () => {
       if (num != teamNumber) {
         toast.error('Incorrect team number');
       } else {
-        const result = await resetHttpRequest(Number(teamNumber));
-
-        if (result.success) {
-          toast.success('Request processed successfully', {theme: 'colored'});
-          resetArrays();
-          router.replace("/scouting");
-        } else {
-          toast.error(result.error || 'Failed to process the request', {theme: 'colored'});
-        }
+        let str = String.raw`curl -X POST -H "Content-Type: application/json" -d "{\"team_number\": ${teamNumber}}" https://MA5951.pythonanywhere.com/reset_image`;
+        setResetText(str)
       }
     } catch (error) {
       console.error('Error sending request:', error);
@@ -144,7 +124,7 @@ const Scouting = () => {
       console.log(x, y);
 
       // Update the state with the original unscaled coordinates
-      addToShootCordinates(x, y);
+      setShootCoordinates((prev) => [...prev, [x, y]]);
     } else if (selectedBrushValue === brushes.miss) {
       // Draw a green circle on the canvas at the clicked coordinates
       drawCircle(canvas, x / xScale, y / yScale, 'yellow');
@@ -153,9 +133,9 @@ const Scouting = () => {
       console.log(x, y);
 
       // Update the state with the original unscaled coordinates
-      addToMissCordinates(x, y);
+      setMissCoordinates((prev) => [...prev, [x, y]]);
     } else if (selectedBrushValue === brushes.pose) {
-      if (poseCoordinates.x === 0 && poseCoordinates.y === 0) {
+      if (poseCoordinates[0][0] === 0 && poseCoordinates[0][1] === 0) {
         // Draw a green circle on the canvas at the clicked coordinates
         drawCircle(canvas, x / xScale, y / yScale, 'purple');
 
@@ -163,8 +143,7 @@ const Scouting = () => {
         console.log(x, y);
 
         // Update the state with the original unscaled coordinates
-        poseCoordinates.x = x;
-        poseCoordinates.y = y;
+        setPoseCoordinates([[x, y]]);
       } else {
         toast.error('Start pose already set', {theme: 'colored'});
       }
@@ -222,21 +201,25 @@ const Scouting = () => {
       <div style={{ color: 'white', textAlign: 'center' }}>
         <h1 style={{ textAlign: 'center', marginBottom: '20px', fontSize: '48px' }}>Scouting MA 5951</h1>
         <div style={{ textAlign: 'center' }}>
-          <label htmlFor="teamNumber" style={{ color: 'white', marginRight: '10px', marginBottom: '10px', fontSize: '18px' }}>
+          {/* <label htmlFor="teamNumber" style={{ color: 'white', marginRight: '10px', marginBottom: '10px', fontSize: '18px' }}>
             Team Number:
-          </label>
+          </label> */}
           <input
             type="number"
             id="teamNumber"
             value={teamNumber}
+            placeholder='Team Number'
             onChange={(e) => setTeamNumber(e.target.value)}
             style={{ marginRight: '10px', marginBottom: '10px', backgroundColor: 'rgb(30, 31, 34)', padding: '10px', borderRadius: '5px', border: 'none' }}
           />
           <button className="purpleButton" onClick={handleClick}>
-            Send Data
+            Send data
           </button>
           <button className="purpleButton" style={{marginLeft: '10px'}} onClick={resetHandleClick}>
             Reset
+          </button>
+          <button className='purpleButton' style={{marginLeft: '10px'}} onClick={() => router.replace('/scouting/reload')}>
+            Clear canvas
           </button>
           <button className={getShootButtonClassName()} style={{marginLeft: '10px'}} onClick={setToScoreBrush}>
             Scored
@@ -258,6 +241,7 @@ const Scouting = () => {
             style={{ width: '100%', height: '100%' }}
             onClick={handleImageClick}
           ></canvas>
+          <p>{resetText}</p>
         </div>
       </div>
     </div>

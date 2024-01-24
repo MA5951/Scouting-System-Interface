@@ -1,6 +1,6 @@
 'use server';
 
-export async function sendHttpRequest(data: any) {
+export async function editHttpRequest(data: any) {
     const response = await fetch('https://MA5951.pythonanywhere.com/update_image', {
         method: 'POST',
         headers: {
@@ -17,16 +17,13 @@ export async function sendHttpRequest(data: any) {
     }
 }
 
-export async function resetHttpRequest(team_number: number) {
-    const response = await fetch('https://MA5951.pythonanywhere.com/update_image', {
+export async function resetHttpRequest(data: any) {
+    const response = await fetch('https://MA5951.pythonanywhere.com/reset_image', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-            "action": "reset",
-            "team_number": team_number
-        }),
+        body: JSON.stringify(data),
     });
   
     if (response.ok) {
