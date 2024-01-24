@@ -11,19 +11,68 @@ const Scouting = () => {
   const [teamNumber, setTeamNumber] = useState('');
 
   const shootCoordinatesArray: { x: number; y: number; }[] = [];
+  const missCoordinatesArray: { x: number; y: number; }[] = [];
+  const poseCoordinates = { x: 0, y: 0 };
+
+  enum brushes {
+    shoot,
+    miss,
+    pose
+  }
+
+  let selectedBrushValue = brushes.shoot;
+
+  const getShootButtonClassName = () => {
+    return selectedBrushValue === brushes.shoot ? 'disabledredButton' : 'redButton';
+  };
+
+  const getMissButtonClassName = () => {
+    return selectedBrushValue === brushes.miss ? 'disabledredButton' : 'redButton';
+  };
+
+  const getPoseButtonClassName = () => {
+    return selectedBrushValue === brushes.pose ? 'disabledredButton' : 'redButton';
+  };
+
+  const setToMissBrush = () => {
+    selectedBrushValue = brushes.miss;
+    console.log(selectedBrushValue);
+  }
+
+  const setToScoreBrush = () => {
+    selectedBrushValue = brushes.shoot;
+    console.log(selectedBrushValue);
+  }
+
+  const setToPoseBrush = () => {
+    if (poseCoordinates.x === 0 && poseCoordinates.y === 0){
+      selectedBrushValue = brushes.pose;
+      console.log(selectedBrushValue);
+    } else {
+      toast.error('Start pose already set', {theme: 'colored'});
+    }
+  }
 
   const addToShootCordinates = (x: number, y: number) => {
     shootCoordinatesArray.push({ x, y });
   }
 
+  const addToMissCordinates = (x: number, y: number) => {
+    missCoordinatesArray.push({ x, y });
+  }
+
   const resetArrays = () => {
     shootCoordinatesArray.length = 0;
+    missCoordinatesArray.length = 0;
   }
 
   const handleClick = async () => {
     if (shootCoordinatesArray.length === 0) {
       console.log(shootCoordinatesArray);
-      toast.error('Please click on the field to add coordinates');
+      toast.error('Please click on the field to add coordinates', {theme: 'colored'});
+      return;
+    } else if (teamNumber === '') {
+      toast.error('Please enter the team number', {theme: 'colored'});
       return;
     }
     try {
@@ -34,21 +83,21 @@ const Scouting = () => {
       });
 
       if (result.success) {
-        toast.success('Request processed successfully');
+        toast.success('Request processed successfully', {theme: 'colored'});
         resetArrays();
         router.replace("/scouting");
       } else {
-        toast.error(result.error || 'Failed to process the request');
+        toast.error(result.error || 'Failed to process the request', {theme: 'colored'});
       }
     } catch (error) {
       console.error('Error sending request:', error);
-      toast.error('Failed to send request');
+      toast.error('Failed to send request', {theme: 'colored'});
     }
   };
 
   const resetHandleClick = async () => {
     if (teamNumber === '') {
-      toast.error('Please enter the team number');
+      toast.error('Please enter the team number', {theme: 'colored'});
       return;
     }
     try {
@@ -61,16 +110,16 @@ const Scouting = () => {
         const result = await resetHttpRequest(Number(teamNumber));
 
         if (result.success) {
-          toast.success('Request processed successfully');
+          toast.success('Request processed successfully', {theme: 'colored'});
           resetArrays();
           router.replace("/scouting");
         } else {
-          toast.error(result.error || 'Failed to process the request');
+          toast.error(result.error || 'Failed to process the request', {theme: 'colored'});
         }
       }
     } catch (error) {
       console.error('Error sending request:', error);
-      toast.error('Failed to send request');
+      toast.error('Failed to send request', {theme: 'colored'});
     }
   }
 
@@ -84,24 +133,49 @@ const Scouting = () => {
     const x = Math.round((event.clientX - boundingRect.left) * xScale);
     const y = Math.round((event.clientY - boundingRect.top) * yScale);
 
-    // Draw a green circle on the canvas at the clicked coordinates
-    drawGreenCircle(canvas, x / xScale, y / yScale);
+    if (selectedBrushValue === brushes.shoot) {
+      // Draw a green circle on the canvas at the clicked coordinates
+      drawCircle(canvas, x / xScale, y / yScale, 'green');
 
-    // Log the scaled coordinates to the console
-    console.log(x, y);
+      // Log the scaled coordinates to the console
+      console.log(x, y);
 
-    // Update the state with the original unscaled coordinates
-    addToShootCordinates(x, y);
+      // Update the state with the original unscaled coordinates
+      addToShootCordinates(x, y);
+    } else if (selectedBrushValue === brushes.miss) {
+      // Draw a green circle on the canvas at the clicked coordinates
+      drawCircle(canvas, x / xScale, y / yScale, 'yellow');
+
+      // Log the scaled coordinates to the console
+      console.log(x, y);
+
+      // Update the state with the original unscaled coordinates
+      addToMissCordinates(x, y);
+    } else if (selectedBrushValue === brushes.pose) {
+      if (poseCoordinates.x === 0 && poseCoordinates.y === 0) {
+        // Draw a green circle on the canvas at the clicked coordinates
+        drawCircle(canvas, x / xScale, y / yScale, 'purple');
+
+        // Log the scaled coordinates to the console
+        console.log(x, y);
+
+        // Update the state with the original unscaled coordinates
+        poseCoordinates.x = x;
+        poseCoordinates.y = y;
+      } else {
+        toast.error('Start pose already set', {theme: 'colored'});
+      }
+    }
   };
 
   // Function to draw a green circle on the canvas at the specified coordinates
-  const drawGreenCircle = (canvas: HTMLCanvasElement, x: number, y: number) => {
+  const drawCircle = (canvas: HTMLCanvasElement, x: number, y: number, color: string = 'green') => {
     const ctx = canvas.getContext('2d');
   
     // Check if ctx is not null before using it
     if (ctx !== null) {
       // Set the circle color to green
-      ctx.fillStyle = 'green';
+      ctx.fillStyle = color;
   
       // Draw a green circle at the specified coordinates
       ctx.beginPath();
@@ -109,7 +183,7 @@ const Scouting = () => {
       ctx.fill();
       ctx.closePath();
     } else {
-      console.error('CanvasRenderingContext2D is null. Unable to draw the green circle.');
+      console.error('CanvasRenderingContext2D is null. Unable to draw the circle.');
     }
   };
 
@@ -160,6 +234,15 @@ const Scouting = () => {
           </button>
           <button className="purpleButton" style={{marginLeft: '10px'}} onClick={resetHandleClick}>
             Reset
+          </button>
+          <button className={getShootButtonClassName()} style={{marginLeft: '10px'}} onClick={setToScoreBrush}>
+            Scored
+          </button>
+          <button className={getMissButtonClassName()} style={{marginLeft: '10px'}} onClick={setToMissBrush}>
+            Missed
+          </button>
+          <button className={getPoseButtonClassName()} style={{marginLeft: '10px'}} onClick={setToPoseBrush}>
+            Start pose
           </button>
         </div>
         <div
