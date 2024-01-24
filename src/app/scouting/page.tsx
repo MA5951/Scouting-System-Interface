@@ -6,6 +6,8 @@ import { toast } from 'react-toastify';
 import { resetHttpRequest, sendHttpRequest } from './actions';
 import {useRouter} from 'next/navigation';
 
+// curl -X POST -H "Content-Type: application/json" -d "{\"action\": \"edit\", \"team_number\": 5951, \"ScoreCoordinates\": [[100, 500], [300, 400], [500, 600]], \"MissCoordinates\": [[500, 200], [800, 400], [1000, 100]], \"PoseCoordinates\": [[1500, 500], [1600, 400], [1700, 600]]}" https://MA5951.pythonanywhere.com/update_image
+
 const Scouting = () => {
   const router = useRouter();
   const [teamNumber, setTeamNumber] = useState('');
@@ -67,7 +69,7 @@ const Scouting = () => {
   }
 
   const handleClick = async () => {
-    if (shootCoordinatesArray.length === 0) {
+    if (shootCoordinatesArray.length === 0 && missCoordinatesArray.length === 0 && poseCoordinates.x === 0 && poseCoordinates.y === 0) {
       console.log(shootCoordinatesArray);
       toast.error('Please click on the field to add coordinates', {theme: 'colored'});
       return;
@@ -79,13 +81,14 @@ const Scouting = () => {
       const result = await sendHttpRequest({
         action: 'edit',
         team_number: Number(teamNumber),
-        coordinates: shootCoordinatesArray,
+        ScoreCoordinates: shootCoordinatesArray,
+        MissCoordinates: missCoordinatesArray,
+        PoseCoordinates: poseCoordinates
       });
 
       if (result.success) {
         toast.success('Request processed successfully', {theme: 'colored'});
         resetArrays();
-        router.replace("/scouting");
       } else {
         toast.error(result.error || 'Failed to process the request', {theme: 'colored'});
       }
