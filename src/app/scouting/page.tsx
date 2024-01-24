@@ -9,14 +9,27 @@ import {useRouter} from 'next/navigation';
 const Scouting = () => {
   const router = useRouter();
   const [teamNumber, setTeamNumber] = useState('');
-  const [clickedCoordinates, setClickedCoordinates] = useState<{ x: number | null; y: number | null }>({ x: null, y: null });
+
+  let shootCoordinatesArray: { x: number; y: number; }[] = [];
+
+  const addToShootCordinates = (x: number, y: number) => {
+    shootCoordinatesArray.push({ x, y });
+  }
+
+  const resetArrays = () => {
+    shootCoordinatesArray = [];
+  }
 
   const handleClick = async () => {
+    if (shootCoordinatesArray.length === 0) {
+      toast.error('Please click on the field to add coordinates');
+      return;
+    }
     try {
       const result = await sendHttpRequest({
         action: 'edit',
         team_number: Number(teamNumber),
-        coordinates: [[clickedCoordinates.x, clickedCoordinates.y]],
+        coordinates: shootCoordinatesArray,
       });
 
       if (result.success) {
@@ -32,6 +45,10 @@ const Scouting = () => {
   };
 
   const resetHandleClick = async () => {
+    if (teamNumber === '') {
+      toast.error('Please enter the team number');
+      return;
+    }
     try {
       // prompt user to make sure he actually wants to reset the data make it so he has to enter the team number again to reset the data
       const num = window.prompt('Please enter the team number to reset the data');
@@ -71,7 +88,7 @@ const Scouting = () => {
     console.log(x, y);
 
     // Update the state with the original unscaled coordinates
-    setClickedCoordinates({ x, y });
+    addToShootCordinates(x, y);
   };
 
   // Function to draw a green circle on the canvas at the specified coordinates
