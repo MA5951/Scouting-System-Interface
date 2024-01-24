@@ -22,6 +22,7 @@ const Scouting = () => {
 
   const handleClick = async () => {
     if (shootCoordinatesArray.length === 0) {
+      console.log(shootCoordinatesArray);
       toast.error('Please click on the field to add coordinates');
       return;
     }
