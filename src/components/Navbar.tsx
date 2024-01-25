@@ -23,7 +23,7 @@ export const Navbar = (props: Props) => {
     }
 
     const getButtonClassName = (page: Page) => {
-        return currentPage === page ? 'disabledPurpleButton' : 'purpleButton';
+        return currentPage === page ? 'disabledredButton' : 'redButton';
     };
 
     return (
@@ -34,7 +34,7 @@ export const Navbar = (props: Props) => {
             <Link className={getButtonClassName(Page.Scouting)}
                 href={'/scouting'} style={{ marginRight: '10px' }}>Scouting
             </Link>
-            <button className='purpleButton' onClick={() => setIsGalGolOpen(true)} style={{zIndex: "999999"}}>
+            <button className='redButton' onClick={() => setIsGalGolOpen(true)} style={{zIndex: "999999"}}>
                 Open Popup
             </button>
             <Galgol stateToSet={isGalGolOpen} handleClose={closePopup}/>
