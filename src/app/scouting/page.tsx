@@ -6,9 +6,6 @@ import { toast } from 'react-toastify';
 import { editHttpRequest, resetHttpRequest } from './actions';
 import { useRouter } from 'next/navigation';
 
-// curl -X POST -H "Content-Type: application/json" -d "{\"action\": \"edit\", \"team_number\": 5951, \"ScoreCoordinates\": [[100, 500], [300, 400], [500, 600]], \"MissCoordinates\": [[500, 200], [800, 400], [1000, 100]], \"PoseCoordinates\": [[1500, 500], [1600, 400], [1700, 600]]}" https://MA5951.pythonanywhere.com/update_image
-// curl -X POST -H "Content-Type: application/json" -d "{\"action\": \"reset\", \"team_number\": 5951}" https://MA5951.pythonanywhere.com/update_image
-
 const Scouting = () => {
   enum brushes {
     shoot,
@@ -97,7 +94,7 @@ const Scouting = () => {
       if (num != teamNumber) {
         toast.error('Incorrect team number');
       } else {
-        let str = String.raw`curl -X POST -H "Content-Type: application/json" -d "{\"team_number\": ${teamNumber}}" https://MA5951.pythonanywhere.com/reset_image`;
+        let str = String.raw`curl -X POST -H "Content-Type: application/json" -d "{\"team_number\": ${teamNumber}}" http://localhost:3000/`;
         setResetText(str)
       }
     } catch (error) {
