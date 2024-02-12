@@ -1,7 +1,7 @@
 'use server';
 
 export async function editHttpRequest(data: any) {
-    const response = await fetch('https://MA5951.pythonanywhere.com/update_image', {
+    const response = await fetch('http://localhost:3000/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -18,7 +18,7 @@ export async function editHttpRequest(data: any) {
 }
 
 export async function resetHttpRequest(data: any) {
-    const response = await fetch('https://MA5951.pythonanywhere.com/reset_image', {
+    const response = await fetch('http://localhost:3000/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
